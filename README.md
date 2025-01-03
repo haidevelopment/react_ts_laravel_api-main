@@ -144,7 +144,9 @@ Tokyo Life là một website bán hàng trực tuyến được xây dựng bằ
 Cài đặt các package PHP:
 bash
 Sao chép mã
+```bash
 composer install
+bash
 Tạo tệp .env:
 bash
 Sao chép mã
