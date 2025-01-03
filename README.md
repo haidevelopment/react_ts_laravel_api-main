@@ -57,25 +57,25 @@ Tokyo Life là một website bán hàng trực tuyến được xây dựng bằ
    ```bash
    git clone <backend-repo-url>
    cd backend
-```bash
+
 composer install
-```bash
+
 cp .env.example .env
-```bash
+
 php artisan migrate --seed
-```bash
+
 php artisan key:generate
-```bash
+
 php artisan serve
-```bash
+
 #### FRONTEND (React TypeScript):
-```bash
+
    cd backend
-```bash
+
 npm install
-```bash
+
 REACT_APP_API_URL=http://localhost:8000/api
-```bash
+
 npm run dev
 
 Dưới đây là nội dung chi tiết cho tệp README.md phù hợp với dự án website bán hàng Tokyo Life sử dụng React (TypeScript) và Laravel API:
@@ -116,12 +116,12 @@ Tokyo Life là một website bán hàng trực tuyến được xây dựng bằ
 - **Axios**: Kết nối API.
 - **Redux Toolkit**: Quản lý trạng thái ứng dụng.
 - **React Hook Form**: Quản lý biểu mẫu.
-- **TailwindCSS**: Tùy chỉnh giao diện.
+- **scss module**: Tùy chỉnh giao diện.
 
 ### Backend:
 - **Laravel**: Framework backend mạnh mẽ.
 - **MySQL**: Hệ quản trị cơ sở dữ liệu.
-- **Passport hoặc Sanctum**: Xác thực API.
+- **Sanctum**: Xác thực API.
 - **Pusher**: Thông báo thời gian thực.
 
 ---
