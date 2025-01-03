@@ -1,0 +1,133 @@
+.variantManager {
+    width: 100%;
+    margin: 20px 0;
+    font-family: Arial, sans-serif;
+  
+    .variantRow {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 10px;
+      transition: all 0.3s ease;
+  
+      &:hover {
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+  
+      .variantInfo {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+  
+        .variantId {
+          font-weight: bold;
+          color: #333;
+          margin-right: 10px;
+        }
+  
+        .variantSelect {
+          padding: 6px;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          margin: 0 5px;
+          width: 100px;
+  
+          &:focus {
+            border-color: #007bff;
+            outline: none;
+          }
+        }
+      }
+  
+      .variantActions {
+        margin-top: 10px;
+        display: flex;
+        justify-content: flex-end;
+  
+        button {
+          background-color: #007bff;
+          color: white;
+          border: none;
+          padding: 5px 10px;
+          border-radius: 4px;
+          cursor: pointer;
+          margin-left: 5px;
+  
+          &:hover {
+            background-color: #0056b3;
+          }
+  
+          &.deleteButton {
+            background-color: #ff4d4f;
+  
+            &:hover {
+              background-color: #d9363e;
+            }
+          }
+        }
+      }
+  
+      .dropdownContent {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s ease, opacity 0.5s ease;
+        opacity: 0;
+  
+        &.open {
+          max-height: 300px;
+          opacity: 1;
+        }
+  
+        padding: 10px;
+        background-color: #f9f9f9;
+        border-top: 1px solid #ddd;
+  
+        label {
+          display: block;
+          font-weight: bold;
+          margin-bottom: 5px;
+        }
+  
+        .input {
+          width: 100%;
+          padding: 8px;
+          margin-bottom: 10px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+  
+          &:focus {
+            border-color: #007bff;
+            outline: none;
+          }
+        }
+  
+        .saveButton {
+          background-color: #4caf50;
+          color: white;
+          border: none;
+          padding: 8px 12px;
+          border-radius: 4px;
+          margin-right: 10px;
+  
+          &:hover {
+            background-color: #388e3c;
+          }
+        }
+  
+        .cancelButton {
+          background-color: #ddd;
+          color: #333;
+          border: none;
+          padding: 8px 12px;
+          border-radius: 4px;
+  
+          &:hover {
+            background-color: #bbb;
+          }
+        }
+      }
+    }
+  }
+  

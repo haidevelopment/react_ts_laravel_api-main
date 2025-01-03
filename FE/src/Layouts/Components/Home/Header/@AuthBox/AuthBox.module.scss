@@ -1,0 +1,107 @@
+.navigation-btn-wrapper {
+    .navigation-btn {
+        background-color: transparent;
+        border: none;
+        color: gray;
+        font-size: 29px;
+        margin-left: 10px;
+        cursor: pointer;
+
+    }
+
+    .hover-box {
+        position: absolute;
+        top: 70px;
+        right: 10px;
+        width: 270px;
+        background: white;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        padding: 10px;
+        z-index: 10;
+        transition: .7s all;
+        -webkit-transition: .7s all;
+        -moz-transition: .7s all;
+        -ms-transition: .7s all;
+        -o-transition: .7s all;
+        cursor: pointer;
+
+        p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #555;
+            text-align: center;
+        }
+
+        .box-user-infor {
+            display: flex;
+            justify-content: center;
+
+            .user-infor {
+                margin-top: 5px;
+                margin-left: 10px;
+
+                .name {
+                    color: #222222;
+                    font-size: 14px;
+                    font-weight: bold;
+                }
+
+                .pointer {
+                    font-size: 10px;
+                    margin-top: 5px;
+
+                    span {
+                        color: #c92127;
+                    }
+                }
+            }
+        }
+
+        .line {
+            width: 100%;
+            background-color: lightgray;
+            height: 1px;
+            margin-top: 10px;
+        }
+
+        .navigation {
+            margin-left: 40px;
+            margin-top: 10px;
+
+            ul {
+                list-style: none;
+
+                li {
+                    margin-top: 10px;
+
+                    .pre {
+                        text-decoration: none;
+                        color: #222222;
+                        font-size: 13px;
+                    }
+
+                    .logout {
+                        text-decoration: none;
+                        color: #c92127;
+                        font-size: 13px;
+                        background-color: transparent;
+                        border: none;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+
+    .hover-box::before {
+        content: "";
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-bottom: 10px solid #fff;
+    }
+}

@@ -1,0 +1,46 @@
+.slideshow {
+    margin: 0 auto;
+    max-width: 1200px;
+    overflow: hidden;
+    padding: 10px 20px;
+
+    .slide {
+        width: 100%;
+        border-radius: 8px;
+    }
+}
+
+.main {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 10px 20px;
+    text-align: center;
+
+    h2 {
+        color: #d62828;
+        margin-bottom: 20px;
+    }
+
+    .products {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+
+        .product {
+            text-align: center;
+
+            img {
+                width: 150px;
+                height: 150px;
+                object-fit: cover;
+                border-radius: 8px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            p {
+                margin-top: 10px;
+                font-size: 14px;
+            }
+        }
+    }
+}

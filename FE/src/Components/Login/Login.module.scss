@@ -1,0 +1,95 @@
+.login {
+  h2 {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+    color: #000000;
+  }
+
+  p {
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+    color: #000000;
+
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+
+    label {
+      .error{
+        color: red;
+      }
+      margin-bottom: 1rem;
+
+      span {
+        color: #000000;
+
+        font-size: 0.6rem;
+        font-weight: bold;
+      }
+
+      input {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+    }
+
+    .password {
+      display: flex;
+      align-items: center;
+      position: relative;
+
+      input {
+        flex: 1;
+        padding-right: 2.5rem;
+      }
+
+      button {
+        position: absolute;
+        right: 0.5rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #888;
+        font-size: 1.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+          color: #555;
+        }
+      }
+    }
+
+    .options {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      label{
+        display: flex;
+        font-size: 0.8rem;
+        span{
+          margin-left: 10px;
+        }
+      }
+      a {
+        font-size: 0.8rem;
+        color: #c92127;
+        text-decoration: none;
+      }
+    }
+
+    .submit {
+      background-color: #c92127;
+      color: #fff;
+      border: none;
+      padding: 0.7rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  }
+}
