@@ -19,7 +19,7 @@ class ProductService
     }
     public function data()
     {
-        $data = Product::with("category","attachments","variant.variantAttributeValue.attributeValue")->orderBy('id', 'DESC')->get();
+        $data = Product::with("category", "attachments", "variant.variantAttributeValue.attributeValue", "variant.variantAttributeValue.attribute")->orderBy('id', 'DESC')->get();
         return $data;
     }
     public function create($request)
@@ -120,30 +120,39 @@ class ProductService
         return $obj;
     }
 
-    private function dataProductVariant(array $data, int $id)
+    private function dataProductVariant($data, $id)
     {
         $path = 'storage/variant/';
 
-        foreach ($data as $buyt) {
-            $name_image = $this->uploads->uploadFiles($buyt['image'], $path);
+        $count = count($data);
+        for ($i = 0; $i < $count; $i++) {
+            $buyt = $data[$i];
+
+            $name_image = isset($buyt['image']) ? $this->uploads->uploadFiles($buyt['image'], $path) : null;
+
             $obj = [
                 "product_id" => $id,
-                "sku" => $buyt['sku'],
-                "price" => $buyt['price'],
-                "quantity" => $buyt['quantity'],
-                "weight" => $buyt['weight'],
+                "sku" => $buyt['sku'] ?? '',
+                "price" => $buyt['price'] ?? 0,
+                "quantity" => $buyt['quantity'] ?? 0,
+                "weight" => $buyt['weight'] ?? 0,
                 "image" => $name_image,
-                "description" => $buyt['description'],
+                "description" => $buyt['description'] ?? '',
                 "active" => 1,
             ];
             $variant_obj = Variant::create($obj);
 
-            foreach ($buyt['attributes'] as $vari) {
-                $vas = VariantAttributeValue::create([
-                    'variant_id' => $variant_obj->id,
-                    'attribute_id' => intval($vari['attrId']),
-                    'attribute_value_id' => intval($vari['attrValueId']),
-                ]);
+            if (isset($buyt['attributes']) && is_array($buyt['attributes'])) {
+                $attr_count = count($buyt['attributes']);
+                for ($j = 0; $j < $attr_count; $j++) {
+                    $vari = $buyt['attributes'][$j];
+
+                    VariantAttributeValue::create([
+                        'variant_id' => $variant_obj->id,
+                        'attribute_id' => intval($vari['attrId'] ?? 0),
+                        'attribute_value_id' => intval($vari['attrValueId'] ?? 0),
+                    ]);
+                }
             }
         }
     }

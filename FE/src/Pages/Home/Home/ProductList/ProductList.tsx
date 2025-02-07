@@ -3,19 +3,24 @@ import classNames from "classnames/bind";
 
 import styles from "./ProductList.module.scss";
 import ProductCard from "../ProductCard/ProductCard";
+import { stateProduct } from "../../../../interfaces/admin/Api";
 
 const cx = classNames.bind(styles);
-
-const ProductList: React.FC = () => {
+interface props {
+  type: string;
+  data: stateProduct[];
+}
+const ProductList: React.FC<props> = ({ type, data }) => {
+  console.log(data);
+  
   return (
     <div className={cx("container")}>
-      <h2>Sản phẩm của TOKYO LIFE</h2>
+      <h2>{type== "nomal" ? "Sản phẩm của TOKYO LIFE" : "Sản phẩm "}</h2>
       <div className={cx("product-list")}>
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
+        {data?.map((p)=>(
+           <ProductCard data={p} />
+        ))}
+      
       </div>
     </div>
   );

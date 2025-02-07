@@ -2,6 +2,7 @@ export const routes = {
   home: "/",
   cart: "/cart",
   login: "/login",
+  detail: "/detail/:id",
 };
 export const routesAdmin = {
   admin: "/admin",

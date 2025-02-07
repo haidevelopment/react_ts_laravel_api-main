@@ -24,7 +24,7 @@ const Home = () => {
         <h2>Tết An Lành</h2>
         <CategoryHome />
         <VoucherList />
-        <ProductList />
+        <ProductList type="nomal" data={products} />
       </section>
     </div>
   );

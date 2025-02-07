@@ -12,6 +12,7 @@ import CreateProduct from "../Pages/Admin/@Products/CreateProduct/CreateProduct"
 import EditProduct from "../Pages/Admin/@Products/EditProduct/EditProduct";
 import ListProduct from "../Pages/Admin/@Products/ListProduct/ListProduct";
 import Cart from "../Pages/Home/Cart";
+import ProductDetail from "../Pages/Home/Detail/ProductDetail/ProductDetail";
 import Home from "../Pages/Home/Home/Home";
 import { routes, routesAdmin } from "../config/router";
 
@@ -29,6 +30,13 @@ const router = [
     component: Cart,
     layout: HomeLayout,
     authenticate: true,
+    permistion: false,
+  },
+  {
+    path: routes.detail,
+    component: ProductDetail,
+    layout: HomeLayout,
+    authenticate: false,
     permistion: false,
   },
   //admin
@@ -107,25 +115,25 @@ const router = [
   },
   //brand
   {
-    path:routesAdmin.brand,
-    component:ListBrand,
-    layout:AdminLayout,
-    authenticate:true,
-    permistion:true
+    path: routesAdmin.brand,
+    component: ListBrand,
+    layout: AdminLayout,
+    authenticate: true,
+    permistion: true,
   },
   {
-    path:routesAdmin.addBrand,
-    component:BrandForm,
-    layout:AdminLayout,
-    authenticate:true,
-    permistion:true
+    path: routesAdmin.addBrand,
+    component: BrandForm,
+    layout: AdminLayout,
+    authenticate: true,
+    permistion: true,
   },
   {
-    path:routesAdmin.editBrand,
-    component:BrandForm,
-    layout:AdminLayout,
-    authenticate:true,
-    permistion:true
+    path: routesAdmin.editBrand,
+    component: BrandForm,
+    layout: AdminLayout,
+    authenticate: true,
+    permistion: true,
   },
 ];
 export { router };

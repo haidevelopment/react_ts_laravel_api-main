@@ -1,3 +1,4 @@
+
 export interface stateProduct {
   id: number | undefined;
   name: string;
@@ -68,6 +69,7 @@ export interface variantValue {
   created_at: Date;
   updated_at: Date;
   attribute_value: attributeValueProduct;
+  attribute:attribute;
 }
 export interface attributeValueProduct {
   id: number;
@@ -75,4 +77,9 @@ export interface attributeValueProduct {
   value: string;
   created_at: Date;
   updated_at: Date;
+}
+interface attribute {
+  id: string | undefined;
+name: string;
+
 }

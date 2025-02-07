@@ -12,6 +12,7 @@ import {
 import { ToastSucess } from "../../../../../utils/toast";
 import ModalListAttribute from "../../modal/ModalListAttribute/ModalListAttribute";
 import { stateAttribute } from "../../../../../interfaces/admin/Api";
+import Loading from "../../../../../Components/Loading";
 
 const cx = classNames.bind(style);
 
@@ -82,59 +83,73 @@ const ListAttribute = () => {
           </tr>
         </thead>
         <tbody>
-          {attribute?.map((a, index) => (
-            <tr key={index}>
-              <th>{index + 1}</th>
-              <th>{a?.name}</th>
-              <th>
-                {a?.attribute_value?.length
-                  ? a.attribute_value.map((e, index) => (
-                      <span key={e?.id}>
-                        {e?.value}
-                        {index < a.attribute_value.length - 1 && " - "}
-                      </span>
-                    ))
-                  : "Không có giá trị thuộc tính"}
-              </th>
-              <th>
-                <Link
-                  to={`/admin/attribute/edit/${a?.id}`}
-                  className={cx("edit-button")}
-                  style={{ color: "orange" }}
-                  title="Sửa thuộc tính"
-                >
-                  <FaEdit />
-                </Link>
-                <button
-                  onClick={() => handleEdit(a)}
-                  style={{
-                    color: "black",
-                    backgroundColor: "transparent",
-                    border: "none",
-                    fontSize: "18px",
-                    cursor: "pointer",
-                  }}
-                  title="Chỉnh sửa & thêm các giá trị thuộc tính"
-                >
-                  <FaCog />
-                </button>
-                <button
-                  onClick={() => handleRemove(Number(a?.id))}
-                  style={{
-                    color: "red",
-                    backgroundColor: "transparent",
-                    border: "none",
-                    fontSize: "18px",
-                    marginLeft: "10px",
-                    cursor: "pointer",
-                  }}
-                  title="Xoá thuộc tính"
-                >
-                  <FaTrash />
-                </button>
-              </th>
+          {attribute.length == 0 ? (
+            <tr>
+              <td colSpan={4} className={cx("loading-container")}>
+                <Loading />
+              </td>
             </tr>
-          ))}
+          ) : attribute?.length === 0 ? (
+            <tr>
+              <td colSpan={4} style={{ textAlign: "center" }}>
+                Không có thuộc tính nào
+              </td>
+            </tr>
+          ) : (
+            attribute?.map((a, index) => (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{a?.name}</td>
+                <td>
+                  {a?.attribute_value?.length
+                    ? a.attribute_value.map((e, index) => (
+                        <span key={e?.id}>
+                          {e?.value}
+                          {index < a.attribute_value.length - 1 && " - "}
+                        </span>
+                      ))
+                    : "Không có giá trị thuộc tính"}
+                </td>
+                <td>
+                  <Link
+                    to={`/admin/attribute/edit/${a?.id}`}
+                    className={cx("edit-button")}
+                    style={{ color: "orange" }}
+                    title="Sửa thuộc tính"
+                  >
+                    <FaEdit />
+                  </Link>
+                  <button
+                    onClick={() => handleEdit(a)}
+                    style={{
+                      color: "black",
+                      backgroundColor: "transparent",
+                      border: "none",
+                      fontSize: "18px",
+                      cursor: "pointer",
+                    }}
+                    title="Chỉnh sửa & thêm các giá trị thuộc tính"
+                  >
+                    <FaCog />
+                  </button>
+                  <button
+                    onClick={() => handleRemove(Number(a?.id))}
+                    style={{
+                      color: "red",
+                      backgroundColor: "transparent",
+                      border: "none",
+                      fontSize: "18px",
+                      marginLeft: "10px",
+                      cursor: "pointer",
+                    }}
+                    title="Xoá thuộc tính"
+                  >
+                    <FaTrash />
+                  </button>
+                </td>
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
 

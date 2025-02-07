@@ -20,6 +20,7 @@ class Product extends Model
         'sku',
         'brand_id',
         'category_id',
+        'instructional_images',
         'active'
     ];
     public function category(){

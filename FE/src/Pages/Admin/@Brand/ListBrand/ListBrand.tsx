@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { useAppDispatch } from "../../../../hooks/useAppDispatch";
 import { destroyBrand, getBrand } from "../../../../Features/Slices/brandSlice";
 import { ToastSucess } from "../../../../utils/toast";
+import Loading from "../../../../Components/Loading";
 const cx = classNames.bind(style);
 const ListBrand = () => {
   const dispatch = useAppDispatch();
@@ -14,14 +15,13 @@ const ListBrand = () => {
   useEffect(() => {
     dispatch(getBrand());
   }, [dispatch]);
-  const hanleDelete =(id:number)=>{
-    if(confirm('Bạn muốn xoá ?')){
-      dispatch(destroyBrand(id)).then(()=>{
-        ToastSucess('Xoá thương hiệu thành công');
-      })
+  const hanleDelete = (id: number) => {
+    if (confirm("Bạn muốn xoá ?")) {
+      dispatch(destroyBrand(id)).then(() => {
+        ToastSucess("Xoá thương hiệu thành công");
+      });
     }
-    
-  }
+  };
   return (
     <div className={cx("container")}>
       <div className={cx("header")}>
@@ -48,41 +48,52 @@ const ListBrand = () => {
           </tr>
         </thead>
         <tbody>
-          {brand?.map((a) => (
-            <tr key={a?.id}>
-              <th>{a?.id}</th>
-              <th>{a?.name}</th>
-              <th>
-                <img src={`http://127.0.0.1:8000/storage/brand/${a?.image}`} width={100} alt="" />
-              </th>
-
-              <th>
-                <Link
-                  to={`/admin/brand/edit/${a?.id}`}
-                  className={cx("edit-button")}
-                  style={{ color: "orange" }}
-                  title="Sửa thương hiệu"
-                >
-                  <FaEdit />
-                </Link>
-
-                <button
-                onClick={()=>hanleDelete(Number(a?.id))}
-                  style={{
-                    color: "red",
-                    backgroundColor: "transparent",
-                    border: "none",
-                    fontSize: "18px",
-                    marginLeft: "10px",
-                    cursor: "pointer",
-                  }}
-                  title="Xoá thương Hiệu"
-                >
-                  <FaTrash />
-                </button>
-              </th>
+          {brand?.length === 0 ? (
+            <tr>
+              <td colSpan={6}>
+                <Loading />
+              </td>
             </tr>
-          ))}
+          ) : (
+            brand?.map((a) => (
+              <tr key={a?.id}>
+                <td>{a?.id}</td>
+                <td>{a?.name}</td>
+                <td>
+                  <img
+                    src={`http://127.0.0.1:8000/storage/brand/${a?.image}`}
+                    width={100}
+                    alt="Ảnh thương hiệu"
+                  />
+                </td>
+                <td>
+                  <Link
+                    to={`/admin/brand/edit/${a?.id}`}
+                    className={cx("edit-button")}
+                    style={{ color: "orange" }}
+                    title="Sửa thương hiệu"
+                  >
+                    <FaEdit />
+                  </Link>
+
+                  <button
+                    onClick={() => hanleDelete(Number(a?.id))}
+                    style={{
+                      color: "red",
+                      backgroundColor: "transparent",
+                      border: "none",
+                      fontSize: "18px",
+                      marginLeft: "10px",
+                      cursor: "pointer",
+                    }}
+                    title="Xoá thương Hiệu"
+                  >
+                    <FaTrash />
+                  </button>
+                </td>
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
     </div>

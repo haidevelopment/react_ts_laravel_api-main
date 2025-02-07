@@ -1,21 +1,28 @@
 import React from "react";
 import classNames from "classnames/bind";
 import styles from "./ProductCard.module.scss";
+import { stateProduct } from "../../../../interfaces/admin/Api";
+import { convertVND } from "../../../../utils/func/convert";
+import { Link } from "react-router-dom";
 
 const cx = classNames.bind(styles);
-
-const ProductCard: React.FC = () => {
+interface props {
+  data: stateProduct;
+}
+const ProductCard: React.FC<props> = ({ data }) => {
   return (
     <div className={cx("product-card")}>
       <div className={cx("image-wrapper")}>
         <div className={cx("tags")}>
           <span className={cx("banchay")}>Bán chạy</span>
         </div>
-        <img
-          src="https://via.placeholder.com/200"
-          alt="Product"
-          className={cx("image")}
-        />
+        <Link to={`/detail/${data.id}`}>
+          <img
+            src={`http://127.0.0.1:8000/storage/product/${data.image}`}
+            alt="Product"
+            className={cx("image")}
+          />
+        </Link>
       </div>
 
       <div className={cx("discount-banner")}>
@@ -23,9 +30,11 @@ const ProductCard: React.FC = () => {
       </div>
 
       <div className={cx("info")}>
-        <h3 className={cx("title")}>Áo khoác lông vũ Nam siêu nhẹ</h3>
+        <h3 className={cx("title")}>
+          <Link to={`/detail/${data.id}`}>{data.name}</Link>
+        </h3>
         <div className={cx("price")}>
-          <span className={cx("current-price")}>899,000đ</span>
+          <span className={cx("current-price")}>{convertVND(data.price)}</span>
         </div>
       </div>
     </div>
