@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('product_attachments', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('product_id');
+            $table->string('image_url', 200);
             $table->timestamps();
         });
     }

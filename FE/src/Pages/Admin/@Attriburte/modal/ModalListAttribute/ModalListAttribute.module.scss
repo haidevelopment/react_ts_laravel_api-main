@@ -1,0 +1,138 @@
+.modal-list-container {
+    width: 1500px;
+    height: 760px;
+    box-shadow: 3px 4px 8px 8px lightgray;
+    position: absolute;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    position: relative;
+    .modal-x{
+        position: absolute;
+        width: 550px;
+        height: auto;
+        top: 140px;
+        left: 22px;
+
+    }
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        button {
+            background-color: transparent;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: gray;
+
+            &:hover {
+                color: black;
+            }
+        }
+    }
+
+    .line {
+        width: 100%;
+        height: 2px;
+        background-color: lightgray;
+        margin: 10px 0;
+    }
+
+    .modal-list-body {
+        margin-top: 20px;
+        overflow: auto;
+        height: 650px;
+
+        .btn-create {
+            background-color: #007bff;
+            border: none;
+            width: 200px;
+            height: 35px;
+            color: #fff;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: background-color 0.3s;
+
+            &:hover {
+                background-color: #0056b3;
+            }
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 16px;
+            margin-top: 10px;
+
+            thead {
+                background-color: #f8f9fa;
+                text-align: left;
+
+                th {
+                    padding: 10px;
+                    border-bottom: 2px solid #dee2e6;
+                }
+            }
+
+            tbody {
+                tr {
+                    border-bottom: 1px solid #dee2e6;
+
+                    &:hover {
+                        background-color: #f1f1f1;
+                    }
+
+                    td {
+                        padding: 10px;
+
+                        &:last-child {
+                            display: flex;
+                            gap: 10px;
+
+                            .btn-edit,
+                            .btn-del {
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                width: 35px;
+                                height: 35px;
+                                border: none;
+                                border-radius: 50%;
+                                cursor: pointer;
+                                font-size: 18px;
+                                transition: background-color 0.3s;
+
+                                &.btn-edit {
+                                    background-color: #ffc107;
+                                    color: white;
+
+                                    &:hover {
+                                        background-color: #e0a800;
+                                    }
+                                }
+
+                                &.btn-del {
+                                    background-color: #dc3545;
+                                    color: white;
+
+                                    &:hover {
+                                        background-color: #c82333;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,99 @@
+.container{
+    margin-top: 50px;
+}
+.voucherContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.voucher {
+  display: flex;
+  width: 400px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px gray;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid lightgray;
+}
+
+.voucherLeft {
+  flex: 3;
+  padding: 15px;
+}
+
+.voucherLeft h3 {
+  color: #d70000;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.voucherLeft p {
+  font-size: 14px;
+  margin: 4px 0;
+}
+
+.expiry {
+  color: red;
+  font-weight: bold;
+}
+
+.voucherRight {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(235, 233, 233);
+}
+
+.copyButton {
+  background: #d70000;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 4px;
+  font-weight: bold;
+
+  &:hover {
+    background: #a50000;
+  }
+}
+
+.voucher::before,
+.voucher::after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: rgb(225, 225, 225);
+  border-radius: 50%;
+  left: 65%;
+  transform: translateX(-50%);
+}
+
+.voucher::before {
+  top: -10px;
+}
+
+.voucher::after {
+  bottom: -10px;
+}
+
+.voucherDivider {
+  position: absolute;
+  width: 2px;
+  height: 100%;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 6px,
+    lightgray 7px
+  );
+  left: 65%;
+  top: 0;
+  transform: translateX(-50%);
+}

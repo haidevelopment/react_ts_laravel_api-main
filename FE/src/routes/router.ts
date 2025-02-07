@@ -1,5 +1,9 @@
 import AdminLayout from "../Layouts/AdminLayout/AdminLayout";
 import HomeLayout from "../Layouts/HomeLayout";
+import FormAttribute from "../Pages/Admin/@Attriburte/Attribute/Form/FormAttribute";
+import ListAttribute from "../Pages/Admin/@Attriburte/Attribute/List/ListAttribute";
+import BrandForm from "../Pages/Admin/@Brand/BrandForm/BrandForm";
+import ListBrand from "../Pages/Admin/@Brand/ListBrand/ListBrand";
 import Create from "../Pages/Admin/@Category/Create";
 import Edit from "../Pages/Admin/@Category/Edit";
 import List from "../Pages/Admin/@Category/List";
@@ -57,8 +61,8 @@ const router = [
     authenticate: true,
     permistion: true,
   },
-   //product
-   {
+  //product
+  {
     path: routesAdmin.product,
     component: ListProduct,
     layout: AdminLayout,
@@ -78,6 +82,50 @@ const router = [
     layout: AdminLayout,
     authenticate: true,
     permistion: true,
+  },
+  // attribute
+  {
+    path: routesAdmin.attribute,
+    component: ListAttribute,
+    layout: AdminLayout,
+    authenticate: true,
+    permistion: true,
+  },
+  {
+    path: routesAdmin.createAttribute,
+    component: FormAttribute,
+    layout: AdminLayout,
+    authenticate: true,
+    permistion: true,
+  },
+  {
+    path: routesAdmin.editAttribute,
+    component: FormAttribute,
+    layout: AdminLayout,
+    authenticate: true,
+    permistion: true,
+  },
+  //brand
+  {
+    path:routesAdmin.brand,
+    component:ListBrand,
+    layout:AdminLayout,
+    authenticate:true,
+    permistion:true
+  },
+  {
+    path:routesAdmin.addBrand,
+    component:BrandForm,
+    layout:AdminLayout,
+    authenticate:true,
+    permistion:true
+  },
+  {
+    path:routesAdmin.editBrand,
+    component:BrandForm,
+    layout:AdminLayout,
+    authenticate:true,
+    permistion:true
   },
 ];
 export { router };

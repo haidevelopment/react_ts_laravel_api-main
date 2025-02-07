@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('variants', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('product_id');
+            $table->string('sku', 100)->unique();
+            $table->decimal('price', 10, 2);
+            $table->integer('quantity');
+            $table->float('weight')->nullable();
+            $table->string('image', 200)->nullable();
+            $table->text('description')->nullable();
+            $table->boolean('active')->default(false);
             $table->timestamps();
         });
     }

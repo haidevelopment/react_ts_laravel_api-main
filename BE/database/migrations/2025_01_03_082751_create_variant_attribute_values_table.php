@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('variant_attribute_values', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('variant_id');
+            $table->unsignedBigInteger('attribute_id');
+            $table->unsignedBigInteger('attribute_value_id');
             $table->timestamps();
         });
     }

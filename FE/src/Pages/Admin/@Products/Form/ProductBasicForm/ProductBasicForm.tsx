@@ -1,18 +1,38 @@
 import classNames from "classnames/bind";
 import style from "./ProductBasicForm.module.scss";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaImages } from "react-icons/fa";
 import Input from "../../../../../Components/Input/Input";
 import { productData } from "../../../../../interfaces/admin/Form";
+import { ToastError } from "../../../../../utils/toast";
+import { useAppDispatch } from "../../../../../hooks/useAppDispatch";
+import { useAppSelector } from "../../../../../hooks/useAppSelector";
+import { getCategories } from "../../../../../Features/Slices/categorySlice";
+import { getBrand } from "../../../../../Features/Slices/brandSlice";
 
 const cx = classNames.bind(style);
 interface propsProduct {
   setData: React.Dispatch<React.SetStateAction<productData>>;
   data: productData;
+  error: boolean;
+  setError: React.Dispatch<React.SetStateAction<boolean>>;
+  submit: boolean;
 }
 
-
-const ProductBasicForm: React.FC<propsProduct> = ({ setData, data }) => {
+const ProductBasicForm: React.FC<propsProduct> = ({
+  setData,
+  data,
+  error,
+  setError,
+  submit,
+}) => {
+  const dispatch = useAppDispatch();
+  const { categories } = useAppSelector((state) => state.category);
+  const { brand } = useAppSelector((state) => state.brand);
+  useEffect(() => {
+    dispatch(getCategories());
+    dispatch(getBrand());
+  }, [dispatch]);
   const [images, setImages] = useState<File[]>([]);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
@@ -30,6 +50,7 @@ const ProductBasicForm: React.FC<propsProduct> = ({ setData, data }) => {
     }
   };
 
+
   const handleImageClick = (image: File) => {
     const imageUrl = URL.createObjectURL(image);
     setSelectedImage(imageUrl);
@@ -40,12 +61,24 @@ const ProductBasicForm: React.FC<propsProduct> = ({ setData, data }) => {
     }));
   };
 
-  const handleInputChange = (name: string, value: string) => {
+  const handleInputChange = (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { name, value } = event.target;
     setData((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
+
+  useEffect(() => {
+    if (error) {
+      ToastError("Vui lòng nhập đầy đủ thông tin");
+      setError(false);
+    }
+  }, [error]);
 
   return (
     <div className={cx("container")}>
@@ -77,7 +110,7 @@ const ProductBasicForm: React.FC<propsProduct> = ({ setData, data }) => {
                   className={cx("thumb-image")}
                   style={{
                     width: "60px",
-                    height: "60px",
+                    height: "70px",
                     objectFit: "cover",
                     margin: "5px",
                     cursor: "pointer",
@@ -112,19 +145,48 @@ const ProductBasicForm: React.FC<propsProduct> = ({ setData, data }) => {
               onChange={handleFileChange}
             />
           </div>
+          {submit && !images && <span color="red">Vui lòng thêm ảnh</span>}
         </div>
         <div className={cx("category-box")}>
           <div className={cx("text-title")}>Chọn danh mục bán</div>
           <div className={cx("line")}></div>
 
-          <select name="" id="" className={cx("category-select")}>
+          <select
+            name="category_id"
+            id=""
+            className={cx("category-select")}
+            onChange={handleInputChange}
+          >
             <option value="">Chọn danh mục</option>
+            {categories?.original?.map((c) => (
+              <option value={c?.id} key={c?.id}>
+                {c?.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className={cx("category-box")}>
+          <div className={cx("text-title")}>Chọn thương hiệu sản phẩm</div>
+          <div className={cx("line")}></div>
+
+          <select
+            name="brand_id"
+            id=""
+            className={cx("category-select")}
+            onChange={handleInputChange}
+          >
+            <option value="">Chọn thương hiệu</option>
+            {brand?.map((c) => (
+              <option value={c?.id} key={c?.id}>
+                {c?.name}
+              </option>
+            ))}
           </select>
         </div>
       </div>
       <div className={cx("right-form")}>
         <div className={cx("product-information")}>
-          <div className={cx("text-title")}>Chọn danh mục bán</div>
+          <div className={cx("text-title")}>Thông tin cơ bản sản phẩm</div>
           <div className={cx("line")}></div>
           <Input
             placeholder="Nhập tên sản phẩm "
@@ -133,6 +195,7 @@ const ProductBasicForm: React.FC<propsProduct> = ({ setData, data }) => {
             required={true}
             onChange={handleInputChange}
             values={data.name}
+            submit={submit}
           />
           <div className={cx("grid-input")}>
             <Input
@@ -142,6 +205,7 @@ const ProductBasicForm: React.FC<propsProduct> = ({ setData, data }) => {
               required={true}
               onChange={handleInputChange}
               values={data.sku}
+              submit={submit}
             />
             <Input
               placeholder="Nhập giá sản phẩm"
@@ -153,6 +217,28 @@ const ProductBasicForm: React.FC<propsProduct> = ({ setData, data }) => {
               left="5px"
               onChange={handleInputChange}
               values={data.price}
+              submit={submit}
+            />
+          </div>
+          <div className={cx("grid-input")}>
+            <Input
+              placeholder="Nhập cân nặng "
+              name="weight"
+              label="Cân nặng"
+              onChange={handleInputChange}
+              values={data.weight}
+              submit={submit}
+            />
+            <Input
+              placeholder="Nhập tags sản phẩm"
+              name="tags"
+              label="Tags sản phẩm"
+              html="input"
+              type="text"
+              left="5px"
+              onChange={handleInputChange}
+              values={data.tags}
+              submit={submit}
             />
           </div>
           <Input
@@ -164,10 +250,11 @@ const ProductBasicForm: React.FC<propsProduct> = ({ setData, data }) => {
             left="5px"
             onChange={handleInputChange}
             values={data.description}
+            submit={submit}
           />
         </div>
         <div className={cx("product-quantity")}>
-          <div className={cx("text-title")}>Chọn danh mục bán</div>
+          <div className={cx("text-title")}>Quản lí thành phần khác</div>
           <div className={cx("line")}></div>
           <div className={cx("grid-input")}>
             <Input
@@ -179,6 +266,7 @@ const ProductBasicForm: React.FC<propsProduct> = ({ setData, data }) => {
               html="input"
               onChange={handleInputChange}
               values={data.quantity}
+              submit={submit}
             />
             <Input
               placeholder="Nhập số lượng tối thiểu "
@@ -190,6 +278,21 @@ const ProductBasicForm: React.FC<propsProduct> = ({ setData, data }) => {
               left="5px"
               onChange={handleInputChange}
               values={data.quantity_warning}
+              submit={submit}
+            />
+          </div>
+          <div className={cx("image-intruct")}>
+            <label htmlFor="instructional_images">Hình ảnh hướng dẫn chọn size ( 1 ảnh )</label>
+            <input
+              type="file"
+              name="instructional_images"
+              id="instructional_images"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) {
+                  setData((prev) => ({ ...prev, instructional_images: file }));
+                }
+              }}
             />
           </div>
         </div>

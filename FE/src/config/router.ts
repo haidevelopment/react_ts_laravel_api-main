@@ -9,8 +9,17 @@ export const routesAdmin = {
   category: "/admin/category",
   categoryCreate: "/admin/create-category",
   categoryEdit: "/admin/edit-category/:id",
-  //
+  //product
   product: "/admin/product",
   productCreate: "/admin/create-product",
   productEdit: "/admin/edit-product/:id",
+
+  //attribute
+  attribute:'/admin/attribute',
+  createAttribute:'/admin/attribute/create',
+  editAttribute:'/admin/attribute/edit/:id',
+  //brand
+  brand:"/admin/brand",
+  addBrand:"/admin/brand/create",
+  editBrand:"/admin/brand/edit/:id"
 };

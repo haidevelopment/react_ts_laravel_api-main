@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class VariantAttributeValue extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'variant_id',
+        'attribute_id',
+        'attribute_value_id',
+    ];
+    public function attributeValue(){
+        return $this->belongsTo(AttributeValue::class);
+    }
 }

@@ -9,6 +9,8 @@ const SideBar: React.FC= () => {
         { icon: 'bxs-dashboard', text: 'Bảng điều khiển', url: '/admin' },
         { icon: 'bx-category', text: 'Danh mục', url: '/admin/category' },
         { icon: 'bxl-product-hunt', text: 'Sản phẩm', url: '/admin/product' },
+        { icon: 'bx-hive', text: 'Thuộc tính', url: '/admin/attribute' },
+        { icon: 'bx-bold', text: 'Thương hiệu', url: '/admin/brand' },
         
     ];
 

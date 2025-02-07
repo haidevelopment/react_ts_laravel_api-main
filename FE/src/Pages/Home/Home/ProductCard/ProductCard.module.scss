@@ -1,0 +1,80 @@
+.product-card {
+    width: 200px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fff;
+    text-align: left;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+    cursor: pointer;
+  
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+  
+  .image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+  
+    .tags {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      display: flex;
+      gap: 4px;
+  
+      span {
+        background: red;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: bold;
+      }
+  
+      .banchay {
+        background: #e60000;
+      }
+    }
+  
+    .image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  
+  .discount-banner {
+    background: #b22222;
+    color: white;
+    font-weight: bold;
+    padding: 5px;
+    text-align: center;
+    font-size: 14px;
+  }
+  
+  .info {
+    padding: 10px;
+  
+    .title {
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+  
+    .price {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+  
+      .current-price {
+        font-size: 16px;
+        color: #e60000;
+        font-weight: bold;
+      }
+    }
+  }
+  

@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { stateAttribute } from "./Api";
 
 export interface AdminLayoutProps {
   children: ReactNode;
@@ -11,4 +12,8 @@ export interface MenuItem {
 
 export interface SideBarProps {
   onMenuItemClick: (menuItem: string) => void;
+}
+export interface ModalIntefaceProps{
+  handleClose : ()=> void,
+  data:stateAttribute 
 }

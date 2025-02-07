@@ -9,11 +9,21 @@ import ModalAuth from "../../../../Components/ModalAuth";
 import { accountService } from "../../../../services/accountService";
 import BoxForm from "./BoxForm/BoxForm";
 import AuthBox from "./@AuthBox/AuthBox";
+import { useAppSelector } from "../../../../hooks/useAppSelector";
+import { useAppDispatch } from "../../../../hooks/useAppDispatch";
+import { getCategories } from "../../../../Features/Slices/categorySlice";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
 
 const Header = () => {
   const token = accountService.accountValue;
   const [isOpen, setIsOpen] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
+  const dispatch = useAppDispatch();
+  const { categories } = useAppSelector((state) => state.category);
+  useEffect(() => {
+    dispatch(getCategories());
+  }, [dispatch]);
   const closeModal = () => {
     setIsOpen(false);
   };
@@ -61,21 +71,22 @@ const Header = () => {
       </div>
       <div className={cx("header-bottom")}>
         <nav className={cx("nav")}>
-          <ul>
-            <li>Hot X-mas</li>
-            <li>Thời trang giữ ấm</li>
-            <li>Nữ</li>
-            <li>Nam</li>
-            <li>Trẻ em</li>
-            <li>Giày dép</li>
-            <li>Phụ kiện</li>
-            <li>Mỹ phẩm - Làm đẹp</li>
-            <li>Nhà cửa - Đời sống</li>
-            <li>Tin tức</li>
-            <li>Quần</li>
-            <li>Áo</li>
-            <li>Sơ Mi</li>
-          </ul>
+          <Swiper
+            modules={[Autoplay]}
+            spaceBetween={2}
+            slidesPerView={8}
+            autoplay={{
+              delay: 2000,
+              disableOnInteraction: false, 
+            }}
+            loop={true}
+          >
+            {categories?.original?.map((c) => (
+              <SwiperSlide key={c?.id}>
+                <div className="category-item">{c?.name}</div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </nav>
       </div>
       {isOpen && <ModalAuth onClose={closeModal} />}
