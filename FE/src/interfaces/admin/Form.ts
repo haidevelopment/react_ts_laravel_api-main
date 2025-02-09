@@ -51,3 +51,13 @@ export interface VariantDataInterface {
   image: File | null;
   imagePreview?: string | null;
 }
+export interface InputCart{
+  name: string;
+  price: number;
+  image: string;
+  variant_id: number | null;
+  quantity: number;
+  total: number;
+  id_product: number;
+  id_user: number;
+}

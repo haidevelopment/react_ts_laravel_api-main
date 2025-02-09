@@ -1,4 +1,4 @@
-import { categoriesState, stateAttribute, stateBrand, stateProduct } from "./Api";
+import { categoriesState, stateAttribute, stateBrand, stateCart, stateProduct } from "./Api";
 
 export interface CategoryState {
   categories: {
@@ -19,5 +19,9 @@ export interface AttributeState {
 }
 export interface BrandState {
   brand: stateBrand[];
+  status: "idle" | "loading" | "failed";
+}
+export interface CartState {
+  cart: stateCart[];
   status: "idle" | "loading" | "failed";
 }

@@ -12,6 +12,8 @@ import CreateProduct from "../Pages/Admin/@Products/CreateProduct/CreateProduct"
 import EditProduct from "../Pages/Admin/@Products/EditProduct/EditProduct";
 import ListProduct from "../Pages/Admin/@Products/ListProduct/ListProduct";
 import Cart from "../Pages/Home/Cart";
+import Checkout from "../Pages/Home/Checkout/Checkout";
+
 import ProductDetail from "../Pages/Home/Detail/ProductDetail/ProductDetail";
 import Home from "../Pages/Home/Home/Home";
 import { routes, routesAdmin } from "../config/router";
@@ -37,6 +39,13 @@ const router = [
     component: ProductDetail,
     layout: HomeLayout,
     authenticate: false,
+    permistion: false,
+  },
+  {
+    path: routes.checkout,
+    component: Checkout,
+    layout: HomeLayout,
+    authenticate: true,
     permistion: false,
   },
   //admin

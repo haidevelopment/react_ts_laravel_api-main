@@ -119,6 +119,23 @@
             cursor: not-allowed;
             border-color: #ddd;
           }
+          .image-btn {
+            width: 47px;
+            height: 470px;
+            border-radius: 50%;
+            display: flex;  
+            justify-content: center;  
+            align-items: center;  
+            overflow: hidden;  
+          }
+          
+          .image-variant {
+            width: 37px;
+            height: 37px;
+            border-radius: 50%;
+            border: 1px solid gray;
+          }
+          
         }
       }
     }
@@ -236,6 +253,20 @@
     font-weight: bold;
     border-radius: 8px;
     border: 2px solid #ddd;
+  }
+  .infor-delivery{
+    display: flex;
+    margin-top: 10px;
+    .delivery-item{
+      .delivery-icon{
+        text-align: center;
+      }
+      .delivery-item-content{
+        text-align: center;
+        color: #000000;
+        font-weight: 700;
+      }
+    }
   }
   
 }

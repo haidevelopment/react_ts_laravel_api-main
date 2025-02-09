@@ -1,6 +1,5 @@
-
 export interface stateProduct {
-  id: number | undefined;
+  id: number;
   name: string;
   price: number;
   description: string;
@@ -21,12 +20,12 @@ export interface stateProduct {
   variant: variantProduct[];
 }
 interface attributeValue {
-  id: string;
+  id: number;
   value: string;
   attribute_id: number;
 }
 export interface stateAttribute {
-  id: string | undefined;
+  id: number;
   name: string;
   attribute_value: attributeValue[];
 }
@@ -69,7 +68,7 @@ export interface variantValue {
   created_at: Date;
   updated_at: Date;
   attribute_value: attributeValueProduct;
-  attribute:attribute;
+  attribute: attribute;
 }
 export interface attributeValueProduct {
   id: number;
@@ -79,7 +78,40 @@ export interface attributeValueProduct {
   updated_at: Date;
 }
 interface attribute {
-  id: string | undefined;
-name: string;
-
+  id: number;
+  name: string;
+}
+export interface variantCartApi {
+  id: number;
+  variant_id: number;
+}
+export interface quantityCartApi {
+  id: number;
+  quantity: number;
+}
+interface user {
+  id: number;
+  first_name: string;
+  last_name: string;
+  email: string;
+  genre: string;
+  birth: string;
+  email_verified_at: Date | null;
+  max_level_security: number;
+  created_at: Date;
+  updated_at: Date;
+}
+export interface stateCart {
+  id: number;
+  name: string;
+  price: number;
+  image: string;
+  variant_id: number;
+  quantity: number;
+  total: number;
+  id_product: number;
+  id_user: number;
+  product: stateProduct;
+  user: user;
+  variant: variantProduct;
 }

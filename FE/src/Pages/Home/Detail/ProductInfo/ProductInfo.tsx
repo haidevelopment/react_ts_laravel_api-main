@@ -6,6 +6,15 @@ import { convertVND } from "../../../../utils/func/convert";
 import Tick from "../../../../Components/Tick/Tick";
 import { ToastError } from "../../../../utils/toast";
 import Ruler from "../../../../Components/Ruler/Ruler";
+import Ship from "../../../../Components/Ship/Ship";
+import Refun from "../../../../Components/Refun/Refun";
+import Coin from "../../../../Components/Coin/Coin";
+import CartIcon1 from "../../../../Components/Cart/CartIcon1";
+import CartIcon2 from "../../../../Components/Cart/CartIcon2";
+import { InputCart } from "../../../../interfaces/admin/Form";
+import { accountService } from "../../../../services/accountService";
+import { useAppDispatch } from "../../../../hooks/useAppDispatch";
+import { addCarts } from "../../../../Features/Slices/cartSlice";
 
 const cx = classNames.bind(styles);
 
@@ -14,6 +23,8 @@ interface Props {
 }
 
 const ProductInfo: React.FC<Props> = ({ product }) => {
+  const token = accountService.accountValue;
+  const dispatch = useAppDispatch();
   const [selectedAttributes, setSelectedAttributes] = useState<{
     [key: number]: number;
   }>({});
@@ -24,7 +35,7 @@ const ProductInfo: React.FC<Props> = ({ product }) => {
 
   const attributesMap = new Map<
     number,
-    { id: number; value: string; name: string }[]
+    { id: number; value: string; name: string; atribute: number }[]
   >();
   product?.variant.forEach((variant) => {
     variant.variant_attribute_value.forEach(
@@ -38,11 +49,41 @@ const ProductInfo: React.FC<Props> = ({ product }) => {
             id: attribute_value.id,
             value: attribute_value.value,
             name: attribute.name,
+            atribute: variant?.id,
           });
         }
       }
     );
   });
+  const handleAddToCart = () => {
+    if (!token) {
+      ToastError("Vui lòng đăng nhập để thêm giỏ hàng");
+      return;
+    }
+
+    if (product?.variant && !selectedVariant) {
+      ToastError("Vui lòng chọn phân loại sản phẩm");
+      return;
+    }
+
+    const cartItem: InputCart = {
+      name: product.name,
+      price: selectedVariant ? selectedVariant.price : product.price,
+      image: selectedVariant ? selectedVariant.image : product.image,
+      variant_id: selectedVariant ? selectedVariant.id : null,
+      quantity: quantity,
+      total:
+        (selectedVariant ? selectedVariant.price : product.price) * quantity,
+      id_product: product.id,
+      id_user: token?.user?.id,
+    };
+
+    if (cartItem) {
+      dispatch(addCarts(cartItem));
+    } else {
+      ToastError("Có lỗi xảy ra vui lòng thử lại sau");
+    }
+  };
 
   const handleSelectAttribute = (attributeId: number, valueId: number) => {
     const newSelection = { ...selectedAttributes, [attributeId]: valueId };
@@ -123,7 +164,7 @@ const ProductInfo: React.FC<Props> = ({ product }) => {
           <div key={attributeId} className={cx("attribute-section")}>
             <h3 className={cx("attribute-title")}>{values[0].name}</h3>
             <div className={cx("attribute-row")}>
-              {values.map(({ id, value }) => {
+              {values.map(({ id, value, name, atribute }) => {
                 const variantWithStock = product.variant.find((variant) =>
                   variant.variant_attribute_value.some(
                     (attr) => attr.attribute_value.id === id
@@ -137,13 +178,31 @@ const ProductInfo: React.FC<Props> = ({ product }) => {
                     className={cx("attribute-btn", {
                       selected: selectedAttributes[attributeId] === id,
                       "out-of-stock": isOutOfStock,
+                      "image-btn": name === "Màu sắc",
                     })}
                     onClick={() =>
                       !isOutOfStock && handleSelectAttribute(attributeId, id)
                     }
                     disabled={isOutOfStock}
                   >
-                    {value}
+                    {name == "Màu sắc" && Array.isArray(product.variant)
+                      ? product.variant.map((v) =>
+                          v?.id === atribute ? (
+                            v?.image ? (
+                              <img
+                                key={v.id}
+                                src={`http://127.0.0.1:8000/storage/variant/${v?.image}`}
+                                className={cx("image-variant")}
+                                alt="Variant"
+                              />
+                            ) : (
+                              <span key={v.id} className={cx("fallback-text")}>
+                                {value}
+                              </span>
+                            )
+                          ) : null
+                        )
+                      : value}
                   </button>
                 );
               })}
@@ -174,11 +233,41 @@ const ProductInfo: React.FC<Props> = ({ product }) => {
         <Ruler /> Hướng dẫn kích thước
       </div>
       <div className={cx("action-buttons")}>
-        <button className={cx("btn", "add-to-cart")}>🛒 Thêm giỏ hàng</button>
-        <button className={cx("btn", "buy-now")}>🛍️ Mua ngay</button>
+        <button className={cx("btn", "add-to-cart")} onClick={handleAddToCart}>
+          <CartIcon1 /> Thêm giỏ hàng
+        </button>
+        <button className={cx("btn", "buy-now")}>
+          <CartIcon2 /> {""} Mua ngay
+        </button>
       </div>
 
       <div className={cx("store-availability")}>Cửa hàng có sẵn sản phẩm</div>
+      <div className={cx("infor-delivery")}>
+        <div className={cx("delivery-item")}>
+          <div className={cx("delivery-icon")}>
+            <Ship />
+          </div>
+          <div className={cx("delivery-item-content")}>
+            Miễn phí giao hàng cho đơn từ 300.000đ
+          </div>
+        </div>
+        <div className={cx("delivery-item")}>
+          <div className={cx("delivery-icon")}>
+            <Refun />
+          </div>
+          <div className={cx("delivery-item-content")}>
+            Lỗi 1 đổi 1 trong vòng 15 ngày (*)
+          </div>
+        </div>
+        <div className={cx("delivery-item")}>
+          <div className={cx("delivery-icon")}>
+            <Coin />
+          </div>
+          <div className={cx("delivery-item-content")}>
+            Được kiểm tra khi nhận hàng
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

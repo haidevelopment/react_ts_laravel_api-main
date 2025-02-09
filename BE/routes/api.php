@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\API\CRUDAPI\AttributeController;
 use App\Http\Controllers\API\CRUDAPI\BrandController;
+use App\Http\Controllers\API\CRUDAPI\CartController;
 use App\Http\Controllers\API\CRUDAPI\CategoryController;
 use App\Http\Controllers\API\CRUDAPI\ProductController;
 use Illuminate\Http\Request;
@@ -61,4 +62,14 @@ Route::prefix('brands')->group(function () {
     Route::post('/', [BrandController::class, 'create'])->middleware('auth:sanctum');
     Route::post('/edit/{id}', [BrandController::class, 'update'])->middleware('auth:sanctum');
     Route::delete('/{id}', [BrandController::class, 'delete'])->middleware('auth:sanctum');
+});
+//CART
+Route::middleware('auth:sanctum')->prefix('cart')->group(function(){
+   Route::get('/',[CartController::class,'getCart']);
+   Route::post('/',[CartController::class,'addToCart']);
+   Route::post('/update',[CartController::class,'updateToCart']);
+   Route::delete('/{id}',[CartController::class,'deleteToCart']);
+   Route::post('/cart-variant',[CartController::class,'updateVariantCart']);
+   Route::post('/cart-quantity',[CartController::class,'updateQuantityCart']);
+
 });

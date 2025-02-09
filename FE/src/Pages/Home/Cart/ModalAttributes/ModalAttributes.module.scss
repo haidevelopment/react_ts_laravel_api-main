@@ -1,0 +1,121 @@
+.modal-variant {
+  width: 100%;
+  height: auto;
+  padding: 15px;
+  background-color: #ffff;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+
+  .variant-container {
+    margin-top: 20px;
+
+    .attribute-section {
+      margin-bottom: 10px;
+      margin-top: 15px;
+
+      .attribute-title {
+        font-size: 14px;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+
+      .attribute-row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 8px;
+
+        .attribute-btn {
+          padding: 6px 18px;
+          font-size: 14px;
+          font-weight: 600;
+          color: #333;
+          background-color: white;
+          border: 1px solid #bbb;
+          border-radius: 20px;
+          cursor: pointer;
+          transition: all 0.3s ease-in-out;
+
+          &:hover {
+            border-color: #333;
+          }
+
+          &.selected {
+            background-color: black;
+            color: white;
+            border-color: black;
+          }
+
+          &.out-of-stock {
+            opacity: 0.5;
+            cursor: not-allowed;
+            border-color: #ddd;
+          }
+
+          .image-btn {
+            width: 47px;
+            height: 470px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+          }
+
+          .image-variant {
+            width: 37px;
+            height: 37px;
+            border-radius: 50%;
+            border: 1px solid gray;
+          }
+        }
+      }
+    }
+  }
+
+  .action-btn {
+    margin-top: 15px;
+
+    .back {
+      width: 160px;
+      height: 35px;
+      border-radius: 3px;
+      background-color: #ffff;
+      border: 1px solid lightgray;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      -ms-border-radius: 3px;
+      -o-border-radius: 3px;
+      cursor: pointer;
+      font-size: 15px;
+      transition: 0.4s ease-in;
+      -webkit-transition: 0.4s ease-in;
+      -moz-transition: 0.4s ease-in;
+      -ms-transition: 0.4s ease-in;
+      -o-transition: 0.4s ease-in;
+      &:hover {
+        background-color: #c92127;
+        color: white;
+      }
+}
+
+    .confirm {
+      width: 160px;
+      height: 35px;
+      border-radius: 3px;
+      background-color: #c92127;
+      color: white;
+      border: 1px solid lightgray;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      -ms-border-radius: 3px;
+      -o-border-radius: 3px;
+      cursor: pointer;
+      font-size: 15px;
+      margin-left: 5px;
+    }
+  }
+}

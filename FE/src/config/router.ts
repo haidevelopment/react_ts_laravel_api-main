@@ -3,6 +3,7 @@ export const routes = {
   cart: "/cart",
   login: "/login",
   detail: "/detail/:id",
+  checkout:"/checkout"
 };
 export const routesAdmin = {
   admin: "/admin",
