@@ -42,7 +42,7 @@ const FormAttribute = () => {
     const input: attributeInput = {
       name: data.name,
     };
-    console.log(input);
+    
     
 
     if (id) {

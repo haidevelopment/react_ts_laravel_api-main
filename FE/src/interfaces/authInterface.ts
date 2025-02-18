@@ -1,4 +1,3 @@
-
 export interface LoginRequest {
   email: string;
   password: string;
@@ -16,17 +15,33 @@ export interface AuthResponse {
     password: undefined;
     remember_token: undefined;
     max_level_security: number;
+    user: AddressInterface[];
     created_at: Date;
     updated_at: Date;
   };
+}
+export interface AuthState {
+  user: AuthResponse | null;
+  status: "idle" | "loading" | "failed";
+}
+export interface AddressInterface {
+  id: number;
+  full_name: string;
+  email: string;
+  phone: string;
+  province: string;
+  district: string;
+  ward: string;
+  address: string;
+  note: string;
+  user_id: number;
 }
 export interface APIError {
   response?: {
     data?: {
       errors?: {
-        [key: string]: string[]; 
+        [key: string]: string[];
       };
     };
   };
 }
-

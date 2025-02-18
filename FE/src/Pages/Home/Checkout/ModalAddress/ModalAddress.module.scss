@@ -1,0 +1,68 @@
+.container {
+    width: 100%;
+    max-width: 600px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 1000px;
+    overflow: hidden;
+    
+    .header-modal{
+      display: flex;
+      justify-content: space-between;
+      h2{
+        font-size: 20px;
+        font-weight: bold;
+        font-family: sans-serif;
+      }
+      button{
+        font-size: 20px;
+        background-color: transparent;
+        border: none;
+        margin-top: -20px;
+        cursor: pointer;
+        width: 40px;
+      }
+    }
+  }
+  
+  .title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .formGroup {
+    margin-bottom: 15px;
+    .error{
+      font-size: 12px;
+      color: #c92127;
+    }
+  }
+  
+  .formGroupRow {
+    display: flex;
+    gap: 10px;
+  }
+  
+  input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .submitBtn {
+    background: #c92127;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 20%;
+  }

@@ -21,7 +21,7 @@ import CartIcon1 from "../../../Components/Cart/CartIcon1";
 import CartIcon3 from "../../../Components/Cart/CartIcon3";
 import CheckoutIcon1 from "../../../Components/Cart/CheckoutIcon1";
 import CompleteIcon1 from "../../../Components/Cart/CompleteIcon1";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const cx = classNames.bind(styles);
 
 const Cart: React.FC = () => {
@@ -118,7 +118,7 @@ const Cart: React.FC = () => {
         <div className={cx("empty-cart")}>
           <img src={oops} alt="Empty cart" className={cx("oop-img")} />
           <p>Bạn chưa có sản phẩm nào trong giỏ hàng.</p>
-          <button className={cx("continue-btn")}>TIẾP TỤC MUA SẮM</button>
+          <button className={cx("continue-btn")}><Link to='/'>TIẾP TỤC MUA SẮM</Link></button>
         </div>
       ) : (
         <div className={cx("cart-content")}>
@@ -143,11 +143,13 @@ const Cart: React.FC = () => {
               <div className={cx("cart-items")}>
                 <table>
                   <thead>
-                    <th>Hình Ảnh</th>
-                    <th>Tên Sản Phẩm</th>
-                    <th>Giá</th>
-                    <th>Số Lượng</th>
-                    <th>Tổng Tiền</th>
+                    <tr>
+                      <th>Hình Ảnh</th>
+                      <th>Tên Sản Phẩm</th>
+                      <th>Giá</th>
+                      <th>Số Lượng</th>
+                      <th>Tổng Tiền</th>
+                    </tr>
                   </thead>
                   <tbody>
                     {localCart?.map((c) => (
@@ -254,7 +256,10 @@ const Cart: React.FC = () => {
               <strong>{convertVND(totalPrice)}</strong>
             </div>
             <div className={cx("line")}></div>
-            <button className={cx("checkout-btn")}  onClick={()=>nav('/checkout')}>
+            <button
+              className={cx("checkout-btn")}
+              onClick={() => nav("/checkout")}
+            >
               TIẾP TỤC THANH TOÁN <FaArrowRight />
             </button>
             <div className={cx("notify")}>

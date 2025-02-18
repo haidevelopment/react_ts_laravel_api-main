@@ -2,6 +2,7 @@
 
 namespace App\Services\Auth;
 
+use App\Models\Address;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -25,6 +26,16 @@ class AuthService
 
         $user = Auth::user();
         return $user->createToken('auth_token')->plainTextToken;
+    }
+    public function getCurrentUser(){
+        $user = Auth::user();
+        $address = Address::where('user_id', Auth::id())->get();
+        $token = $user->createToken('auth_token')->plainTextToken;
+        $user['user'] = $address;
+        return [
+            'token'=>$token,
+            'user'=> $user
+        ];
     }
 
     public function changePassword(User $user, array $data)

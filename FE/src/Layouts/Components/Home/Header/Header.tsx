@@ -83,7 +83,7 @@ const Header = () => {
           >
             {categories?.original?.map((c) => (
               <SwiperSlide key={c?.id}>
-                <div className="category-item">{c?.name}</div>
+                <div className={cx("category-item")}>{c?.name}</div>
               </SwiperSlide>
             ))}
           </Swiper>

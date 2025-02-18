@@ -1,6 +1,6 @@
 .checkout-container {
   padding: 20px;
-  padding-bottom: 200px;
+  padding-bottom: 50px;
   .title {
     font-size: 24px;
     font-weight: bold;
@@ -100,6 +100,26 @@
             margin-top: 3px;
           }
         }
+        .create-address {
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+         
+
+          .action-container {
+            display: flex;
+            gap: 10px;
+          }
+
+          .action {
+            background-color: transparent;
+            border: none;
+            text-decoration: underline;
+            margin-top: 10px;
+            cursor: pointer;
+          }
+        }
+
         .payment-ss {
           display: flex;
           flex-direction: column;
@@ -135,14 +155,37 @@
             width: 100%;
             padding: 20px;
             background-color: #f5f5f5;
-            .notify {
-              font-size: 17px;
+            .address-null {
+              .notify {
+                font-size: 17px;
+              }
+              .action {
+                background-color: transparent;
+                border: none;
+                text-decoration: underline;
+                margin-top: 20px;
+              }
             }
-            .action {
-              background-color: transparent;
-              border: none;
-              text-decoration: underline;
-              margin-top: 20px;
+            .address-infor {
+              .infor {
+                .name-phone {
+                  display: flex;
+                  width: 60%;
+                  justify-content: space-between;
+                }
+                .address {
+                  display: flex;
+                  margin-top: 10px;
+                  .title {
+                    font-weight: bold;
+                    font-size: 14px;
+                  }
+                  .address-detail {
+                    font-size: 14px;
+                    margin-left: 10px;
+                  }
+                }
+              }
             }
           }
         }
@@ -223,8 +266,6 @@
         font-size: 20px;
         font-weight: bold;
         margin-bottom: 10px;
-        
-
       }
 
       .discount-section {
@@ -311,5 +352,29 @@
         }
       }
     }
+  }
+  .modal_address {
+    position: absolute;
+    width: 100%;
+    background-color: rgba(54, 51, 51, 0.5);
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .loading_component {
+    position: absolute;
+    width: 100%;
+    background-color: white;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }

@@ -21,20 +21,33 @@ export interface productData {
   instructional_images: File | null;
 }
 export interface ProductDataVariant {
-  data:productData,
-  variant:VariantDataInterface[]
+  data: productData;
+  variant: VariantDataInterface[];
 }
 export interface attributeInput {
   name: string;
 }
 export interface attributeValueInput {
   value: string;
-  attribute_id:number
+  attribute_id: number;
 }
 export interface InputBrand {
   id: number | undefined;
   name: string;
   image: File;
+}
+export interface CouponInput {
+  code: string;
+  title: string;
+  voucher_type: string;
+  value: number;
+  discount_type: string;
+  min_order_value: number;
+  max_discount_value: number;
+  start_date: string;
+  end_date: string;
+  limit: number;
+  is_active: number;
 }
 export interface Variant {
   attrId: string;
@@ -47,11 +60,25 @@ export interface VariantDataInterface {
   sku: string;
   weight: number;
   description: string;
-  quantity: number; 
+  quantity: number;
   image: File | null;
   imagePreview?: string | null;
 }
-export interface InputCart{
+export interface AddressData {
+  full_name: string;
+  email: string;
+  phone: string;
+  province: string;
+  district: string;
+  ward: string;
+  address: string;
+  note?: string;
+}
+export interface apiRequestLocal {
+  code:string;
+  name:string;
+}
+export interface InputCart {
   name: string;
   price: number;
   image: string;
@@ -60,4 +87,11 @@ export interface InputCart{
   total: number;
   id_product: number;
   id_user: number;
+}
+export interface orderData {
+  total_price:number;
+  payment_method:string;
+  address_id:number | null;
+  coupon_id:number | null | undefined;
+
 }

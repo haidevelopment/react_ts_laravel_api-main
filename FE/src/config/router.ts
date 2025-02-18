@@ -3,7 +3,9 @@ export const routes = {
   cart: "/cart",
   login: "/login",
   detail: "/detail/:id",
-  checkout:"/checkout"
+  checkout:"/checkout",
+  order:"/order",
+  thank:"/thankyou",
 };
 export const routesAdmin = {
   admin: "/admin",
@@ -23,5 +25,12 @@ export const routesAdmin = {
   //brand
   brand:"/admin/brand",
   addBrand:"/admin/brand/create",
-  editBrand:"/admin/brand/edit/:id"
+  editBrand:"/admin/brand/edit/:id",
+  //coupon
+  coupon:"/admin/coupon",
+  addCoupon:"/admin/coupon/create",
+  editCoupon:"/admin/coupon/edit/:id",
+  // order
+  order:"/admin/order",
+  orderDetail:"/admin/order/detail/:id",
 };

@@ -1,28 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./VoucherList.module.scss";
 import classNames from "classnames/bind";
+import { stateCoupon } from "../../../../interfaces/admin/Api";
 const cx = classNames.bind(styles);
-const VoucherList: React.FC = () => {
+import tokyo from "../../../../assets/image/logo/tokyo.png";
+import { formatDateVietnamese } from "../../../../utils/func/convert";
+interface props {
+  coupon: stateCoupon;
+}
+const VoucherList: React.FC<props> = ({ coupon }) => {
+  const [copied, setCopied] = useState(false);
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(coupon.code);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
   return (
-    <div className={cx("container")}>
-        <div className={cx("title")}>
-            <h2>MUA ONLINE NHẬN VOUCHER MAY MẮN</h2>
+    <div className={cx("card")}>
+      <div className={cx("main")}>
+        <div className={cx("co-img")}>
+          <img src={tokyo} alt={coupon.title} />
         </div>
-      <div className={cx("voucherContainer")}>
-        <div className={cx("voucher")}>
-          <div className={cx("voucherLeft")}>
-            <h3>GIẢM THÊM 100,000đ</h3>
-            <p>
-              Nhập mã <strong>THANTAI</strong>
-            </p>
-            <p>Cho đơn hàng từ 700,000đ</p>
-            <p className={cx("expiry")}>Hết hạn: 28/02/2025</p>
-          </div>
-          <div className={cx("voucherDivider")}></div>
-          <div className={cx("voucherRight")}>
-            <button className={cx("copyButton")}>Sao chép mã</button>
-          </div>
+        <div className={cx("vertical")}></div>
+        <div className={cx("content")}>
+          <h2>{coupon.title}</h2>
+          <h1>
+            {parseInt(coupon.value, 10)} <span> {coupon?.discount_type == 'percent' ? '%' : 'đ'}</span>
+          </h1>
+          <p>Hết hạn : {formatDateVietnamese(coupon?.end_date)}</p>
         </div>
+      </div>
+      <div className={cx("copy-button")}>
+        <input type="text" readOnly value={coupon.code} />
+        <button onClick={copyToClipboard} className={cx("copybtn")}>
+          {copied ? "COPIED" : "COPY"}
+        </button>
       </div>
     </div>
   );

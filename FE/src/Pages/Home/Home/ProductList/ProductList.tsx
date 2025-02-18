@@ -18,7 +18,7 @@ const ProductList: React.FC<props> = ({ type, data }) => {
       <h2>{type== "nomal" ? "Sản phẩm của TOKYO LIFE" : "Sản phẩm "}</h2>
       <div className={cx("product-list")}>
         {data?.map((p)=>(
-           <ProductCard data={p} />
+           <ProductCard data={p} key={p?.id} />
         ))}
       
       </div>

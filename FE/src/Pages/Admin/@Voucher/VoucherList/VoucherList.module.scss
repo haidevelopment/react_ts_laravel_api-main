@@ -1,0 +1,101 @@
+.container {
+    width: 97%;
+    padding: 20px;
+    min-height: 960px;
+    background-color: #fff;
+    margin: 20px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    position: relative;
+
+    .modal {
+        position: fixed;
+        top: 170px;
+        margin-left: 53px;
+
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        margin-top: 30px;
+
+        .search-container {
+            position: relative;
+            display: inline-block;
+
+            .coupon-search {
+                width: 300px;
+                padding: 10px 15px;
+                padding-left: 40px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                font-size: 16px;
+            }
+
+            .search-icon {
+                position: absolute;
+                left: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #888;
+                font-size: 18px;
+            }
+        }
+
+        .add-coupon-button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    }
+
+    .coupon-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 35px;
+
+        th,
+        td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #fff;
+
+        }
+
+        .edit-button,
+        .delete-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            margin-right: 10px;
+        }
+
+        .edit-button {
+            color: gray;
+        }
+
+        .delete-button {
+            color: #dc3545;
+        }
+
+        .edit-button:hover,
+        .delete-button:hover {
+            opacity: 0.7;
+        }
+    }
+}

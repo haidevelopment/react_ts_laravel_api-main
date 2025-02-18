@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./Checkout.module.scss";
 import oops from "../../../assets/image/logo/oops.jpg";
@@ -12,19 +12,47 @@ import CartIcon3 from "../../../Components/Cart/CartIcon3";
 import Address from "../../../Components/Ship/Address";
 import area from "../../../assets/image/logo/area.jpg";
 import PaymentMethod from "../../../Components/Ship/PaymentMethod";
+import { getCoupon } from "../../../Features/Slices/couponSlice";
+import { ToastError, ToastSucess } from "../../../utils/toast";
+import ModalAddress from "./ModalAddress/ModalAddress";
+import { getCurrenUser } from "../../../Features/Slices/authSlice";
+import { AddressInterface } from "../../../interfaces/authInterface";
+import ModalSelectAddress from "./ModalSelectAddress/ModalSelectAddress";
+import { VNPayAPI } from "../../../services/Api/paymentAPI";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import LoadingOrder from "../../../Components/LoadingOrder/LoadingOrder";
+import { createOrder } from "../../../Features/Slices/orderSlice";
+
 const cx = classNames.bind(styles);
 
 const Checkout: React.FC = () => {
   const dispatch = useAppDispatch();
   const { cart } = useAppSelector((state) => state.cart);
- 
+  const { coupon } = useAppSelector((state) => state.coupon);
+  const { user } = useAppSelector((state) => state.user);
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [couponCode, setCouponCode] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState<string>("cod");
+  const [discount, setDiscount] = useState(0);
+  const [error, setError] = useState("");
+  const [address, setAddress] = useState<AddressInterface | null>(null);
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isOpenModalAddress, setIsOpenModalAddress] = useState(false);
+  const [searchParams] = useSearchParams();
+  const paramsObject = Object.fromEntries(searchParams.entries());
+
   useEffect(() => {
     dispatch(getCart());
+    dispatch(getCoupon());
+    dispatch(getCurrenUser());
   }, [dispatch]);
+  useEffect(() => {
+    if (user?.user?.user && user.user.user.length > 0) {
+      setAddress(user.user.user[0]);
+    }
+  }, [user]);
 
-  const totalPrice = useMemo(() => {
-    return cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  }, [cart]);
   const payment_method = [
     {
       name: "Thanh Toán Qua VNPAY",
@@ -35,6 +63,121 @@ const Checkout: React.FC = () => {
       value: "cod",
     },
   ];
+  const totalPrice = useMemo(() => {
+    return cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  }, [cart]);
+
+  const handleApplyCoupon = () => {
+    setError("");
+    setDiscount(0);
+
+    if (!couponCode) {
+      setError("Vui lòng nhập mã giảm giá.");
+      return;
+    }
+
+    const selectedCoupon = coupon.find((c) => c.code === couponCode);
+    if (!selectedCoupon) {
+      setError("Mã giảm giá không tồn tại.");
+      return;
+    }
+
+    const now = new Date().getTime();
+    const startDate = new Date(selectedCoupon.start_date).getTime();
+    const endDate = new Date(selectedCoupon.end_date).getTime();
+    if (now < startDate || now > endDate || selectedCoupon.is_active === 0) {
+      setError("Mã giảm giá đã hết hạn hoặc không hợp lệ.");
+      return;
+    }
+
+    if (totalPrice < selectedCoupon.min_order_value) {
+      setError(
+        `Đơn hàng tối thiểu phải đạt ${convertVND(
+          selectedCoupon.min_order_value
+        )} để áp dụng mã giảm giá.`
+      );
+      return;
+    }
+
+    let discountValue = 0;
+    if (selectedCoupon.discount_type == "percent") {
+      discountValue = (totalPrice * parseFloat(selectedCoupon.value)) / 100;
+      ToastSucess("Áp dụng mã giám giá thành công !");
+    } else {
+      discountValue = parseFloat(selectedCoupon.value);
+      ToastSucess("Áp dụng mã giám giá thành công !");
+    }
+
+    discountValue = Math.min(discountValue, selectedCoupon.max_discount_value);
+    setDiscount(discountValue);
+  };
+  const handleModal = () => {
+    setIsOpenModal(!isOpenModal);
+  };
+  const handleModalSelectAddress = () => {
+    setIsOpenModalAddress(!isOpenModalAddress);
+  };
+  const handlePlaceOrder = async () => {
+    const orderData = {
+      total_price: totalPrice - discount,
+      payment_method: paymentMethod,
+      address_id: address?.id ?? null,
+      coupon_id:
+        discount > 0 ? coupon.find((c) => c.code == couponCode)?.id : null,
+    };
+
+    if (user?.user?.user?.length == 0) {
+      ToastError("Vui lòng thêm địa chỉ nhận hàng !");
+    } else {
+      if (paymentMethod === "vnpay_decod") {
+        const bank = {
+          bank_code: "NCB",
+          amount: orderData.total_price,
+        };
+
+        const url = await VNPayAPI(bank);
+        localStorage.setItem("coupon", String(orderData.coupon_id));
+        localStorage.setItem("address", String(address?.id));
+        if (url) {
+          window.location.href = url.url;
+        }
+      } else {
+        setLoading(true);
+        dispatch(createOrder(orderData));
+        setTimeout(() => {
+          setLoading(false);
+          navigate("/thankyou");
+        }, 2000);
+      }
+    }
+  };
+  useEffect(() => {
+    if (paramsObject && String(paramsObject["vnp_ResponseCode"]) == "00") {
+      setLoading(true);
+      const orderData = {
+        total_price: Number(paramsObject["vnp_Amount"]) / 100,
+        payment_method: "vnpay_decod",
+        address_id: localStorage.getItem("address")
+          ? Number(localStorage.getItem("address"))
+          : null,
+        coupon_id: localStorage.getItem("coupon")
+          ? Number(localStorage.getItem("coupon"))
+          : null,
+      };
+
+      dispatch(createOrder(orderData));
+
+      const timeout = setTimeout(() => {
+        localStorage.removeItem("coupon");
+        localStorage.removeItem("address");
+        setLoading(false);
+        navigate("/thankyou");
+      }, 3000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, []);
+
   return (
     <div className={cx("checkout-container")}>
       <div className={cx("steps")}>
@@ -70,11 +213,45 @@ const Checkout: React.FC = () => {
               <div className={cx("body-address")}>
                 <img src={area} alt="" height={100} />
                 <div className={cx("box-notify")}>
-                  <div className={cx("notify")}>
-                    Bạn chưa có địa chỉ vui lòng thêm địa chỉ mới
-                  </div>
-                  <button className={cx("action")}>
-                    Thêm địa chỉ mới ngay
+                  {user?.user?.user?.length == 0 ? (
+                    <div className={cx("address-null")}>
+                      <div className={cx("notify")}>
+                        Bạn chưa có địa chỉ vui lòng thêm địa chỉ mới
+                      </div>
+                      <button className={cx("action")} onClick={handleModal}>
+                        Thêm địa chỉ mới ngay
+                      </button>
+                    </div>
+                  ) : (
+                    <div className={cx("address-infor")}>
+                      <div className={cx("infor")}>
+                        <div className={cx("name-phone")}>
+                          <h4>Họ và Tên : {address?.full_name} </h4>
+                          <h4>SĐT : {address?.phone} </h4>
+                        </div>
+                        <div className={cx("address")}>
+                          <div className={cx("title")}>Địa chỉ giao hàng :</div>
+                          <div className={cx("address-detail")}>
+                            {" "}
+                            {address?.note} , {address?.ward},{" "}
+                            {address?.district} ,{address?.province}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className={cx("create-address")}>
+                <div className={cx("action-container")}>
+                  <button className={cx("action")} onClick={handleModal}>
+                    Thêm địa chỉ giao hàng
+                  </button>
+                  <button
+                    className={cx("action")}
+                    onClick={handleModalSelectAddress}
+                  >
+                    Chọn địa chỉ giao hàng
                   </button>
                 </div>
               </div>
@@ -85,9 +262,16 @@ const Checkout: React.FC = () => {
                 <div className={cx("title")}>PHƯƠNG THỨC THANH TOÁN</div>
               </div>
               <div className={cx("payment-ss")}>
-                {payment_method?.map((p,index) => (
-                  <div className={cx("payment")} key={index+1}>
-                    <input type="radio" value={p?.value} name="payment" /> <p>{p?.name}</p>
+                {payment_method?.map((p, index) => (
+                  <div className={cx("payment")} key={index + 1}>
+                    <input
+                      type="radio"
+                      value={p.value}
+                      name="payment"
+                      checked={paymentMethod === p.value}
+                      onChange={(e) => setPaymentMethod(e.target.value)}
+                    />
+                    <p>{p.name}</p>
                   </div>
                 ))}
               </div>
@@ -148,48 +332,70 @@ const Checkout: React.FC = () => {
             </div>
           </div>
           <div className={cx("order-summary")}>
-      <h3>
-        ĐƠN <span className={cx("highlight")}>HÀNG</span>
-      </h3>
+            <h3>
+              ĐƠN <span className={cx("highlight")}>HÀNG</span>
+            </h3>
 
-      {/* Mã giảm giá */}
-      <div className={cx("discount-section")}>
-        <input type="text" placeholder="Mã phiếu giảm giá" />
-        <button>ÁP DỤNG</button>
-      </div>
-      <p className={cx("check-discount")}>
-        Kiểm tra <span>Phiếu giảm giá của tôi</span>
-      </p>
+            <div className={cx("discount-section")}>
+              <input
+                type="text"
+                placeholder="Mã phiếu giảm giá"
+                value={couponCode}
+                onChange={(e) => setCouponCode(e.target.value)}
+              />
+              <button onClick={handleApplyCoupon}>ÁP DỤNG</button>
+            </div>
+            {error && <p className={cx("error-message")}>{error}</p>}
+            <p className={cx("check-discount")}>
+              Kiểm tra <span>Phiếu giảm giá của tôi</span>
+            </p>
 
-      {/* Tính tổng giá */}
-      <div className={cx("line")}></div>
-      <div className={cx("total-amount")}>
-        <div className={cx("price")}>Tạm tính:</div>
-        <strong>{totalPrice.toLocaleString()}đ</strong>
-      </div>
-      <div className={cx("total-amount")}>
-        <div className={cx("price")}>Phí vận chuyển:</div>
-        <strong>0đ</strong>
-      </div>
-      <div className={cx("total-amount")}>
-        <div className={cx("price")}>Mã giảm giá:</div>
-        <strong>-0đ</strong>
-      </div>
-      <div className={cx("line")}></div>
-      <div className={cx("total-amount", "final")}>
-        <div className={cx("price")}>Tổng thanh toán:</div>
-        <strong>{totalPrice.toLocaleString()}đ</strong>
-      </div>
+            <div className={cx("line")}></div>
+            <div className={cx("total-amount")}>
+              Tạm tính: <strong>{convertVND(totalPrice)}</strong>
+            </div>
 
-      {/* Yêu cầu hóa đơn */}
-      <div className={cx("invoice-request")}>
-        <input type="checkbox" id="invoice" />
-        <label htmlFor="invoice">Yêu cầu hóa đơn</label>
-      </div>
+            <div className={cx("total-amount")}>
+              <div className={cx("price")}>Phí vận chuyển:</div>
+              <strong>0đ</strong>
+            </div>
+            <div className={cx("total-amount")}>
+              Giảm giá: <strong>-{convertVND(discount)}</strong>
+            </div>
+            <div className={cx("total-amount", "final")}>
+              Tổng thanh toán:{" "}
+              <strong>{convertVND(totalPrice - discount)}</strong>
+            </div>
 
-      {/* Nút đặt hàng */}
-      <button className={cx("checkout-btn")}>ĐẶT HÀNG</button>
-    </div>
+            <div className={cx("invoice-request")}>
+              <input type="checkbox" id="invoice" />
+              <label htmlFor="invoice">Yêu cầu hóa đơn</label>
+            </div>
+
+            <button className={cx("checkout-btn")} onClick={handlePlaceOrder}>
+              ĐẶT HÀNG
+            </button>
+          </div>
+        </div>
+      )}
+      {isOpenModal && (
+        <div className={cx("modal_address")}>
+          <ModalAddress handleClose={handleModal} />
+        </div>
+      )}
+      {isOpenModalAddress && (
+        <div className={cx("modal_address")}>
+          <ModalSelectAddress
+            handleClose={handleModalSelectAddress}
+            setAddress={setAddress}
+            addressDefault={address}
+            data={user?.user?.user}
+          />
+        </div>
+      )}
+      {loading && (
+        <div className={cx("loading_component")}>
+          <LoadingOrder />
         </div>
       )}
     </div>

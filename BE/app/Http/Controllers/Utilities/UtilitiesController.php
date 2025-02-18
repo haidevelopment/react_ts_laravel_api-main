@@ -17,4 +17,10 @@ class UtilitiesController extends Controller
         $file->move(public_path($path), $fileName);
         return $fileName;
     }
+    public function generateOrderCode($length = 10) {
+        $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        $randomString = substr(str_shuffle(str_repeat($characters, 5)), 0, $length - 4);
+        $uniquePart = strtoupper(substr(md5(uniqid(mt_rand(), true)), 0, 4));
+        return $randomString . $uniquePart;
+    }
 }

@@ -40,6 +40,11 @@ class AuthController extends Controller
             return response()->json(['error' => $err], Response::HTTP_BAD_REQUEST);
         }
     }
+    public function getUser()
+    {
+        $obj = $this->authService->getCurrentUser();
+        return response()->json($obj);
+    }
 
 
     public function login(Request $request)

@@ -1,3 +1,5 @@
+import { AddressInterface } from "../authInterface";
+
 export interface stateProduct {
   id: number;
   name: string;
@@ -113,5 +115,54 @@ export interface stateCart {
   id_user: number;
   product: stateProduct;
   user: user;
+  variant: variantProduct;
+}
+export interface stateCoupon {
+  id: number;
+  code: string;
+  title: string;
+  voucher_type: string;
+  value: string;
+  discount_type: string;
+  min_order_value: number;
+  max_discount_value: number;
+  start_date: string;
+  end_date: string;
+  limit: number;
+  is_active: number;
+}
+export interface stateOrder {
+  id: number;
+  user_id: number;
+  code: string;
+  address_id: number;
+  coupon_id: number;
+  total_price: number;
+  shipping_fee: number;
+  discount_amount: number;
+  payment_method: string;
+  payment_status: string;
+  order_status: string;
+  note: string;
+  created_at: string;
+  items: orderItem[];
+  address: AddressInterface;
+  coupon: stateCoupon;
+}
+export interface orderItem {
+  id: number;
+  order_id: number;
+  product_id: number;
+  variant_id: number;
+  price: number;
+  quantity: number;
+  total_price: number;
+  created_at: string;
+  product: {
+    id: number;
+    name: string;
+    price: number;
+    image: string;
+  };
   variant: variantProduct;
 }

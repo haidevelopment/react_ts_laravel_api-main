@@ -3,7 +3,7 @@
     background-color: #fff;
     align-items: center;
     justify-content: space-between;
-
+    // position: fixed;
     .header-top {
         padding-top: 20px;
         padding-bottom: 20px;
@@ -167,7 +167,11 @@
         margin: 20px auto;
         padding: 5px 10px 5px 10px;
         text-align: center;
-
+        .nav{
+            .category-item{
+                font-size: 14px;
+            }
+        }
         .nav ul {
             list-style: none;
             display: flex;

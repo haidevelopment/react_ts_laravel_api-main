@@ -1,0 +1,27 @@
+
+.shipping-box {
+    background: white;
+    padding: 20px;
+    flex: 1;
+    border-radius: 10px;
+    border: 1px solid lightgray;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.05);
+
+    h3 {
+        font-size: 18px;
+        margin-bottom: 10px;
+        color: #333333;
+    }
+
+    .info {
+        p {
+            font-size: 14px;
+            color: #333333;
+            margin: 5px 0;
+
+            strong {
+                color: gray;
+            }
+        }
+    }
+}

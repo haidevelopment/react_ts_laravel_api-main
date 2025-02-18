@@ -4,6 +4,9 @@ import productReducer from "../Features/Slices/productSlice";
 import attributeReducer from "../Features/Slices/attributeSlice";
 import brandReducer from "../Features/Slices/brandSlice";
 import cartReducer from "../Features/Slices/cartSlice";
+import couponReducer from "../Features/Slices/couponSlice";
+import userReducer from "../Features/Slices/authSlice";
+import orderReducer from "../Features/Slices/orderSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +15,9 @@ export const store = configureStore({
     attribute: attributeReducer,
     brand: brandReducer,
     cart: cartReducer,
+    coupon: couponReducer,
+    user:userReducer,
+    order:orderReducer
   },
 });
 

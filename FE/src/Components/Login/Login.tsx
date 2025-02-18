@@ -9,9 +9,8 @@ import { accountService } from "../../services/accountService";
 import Loading from "../Loading";
 import { LoginRequest } from "../../interfaces/authInterface";
 import { loginSchema } from "../../utils/validation/authValidation";
-
-
-
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { getCurrenUser } from "../../Features/Slices/authSlice";
 
 type LoginProps = {
   onClose: () => void;
@@ -19,6 +18,7 @@ type LoginProps = {
 
 const Login: React.FC<LoginProps> = ({ onClose }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(true);
+  const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
@@ -36,6 +36,10 @@ const Login: React.FC<LoginProps> = ({ onClose }) => {
   const onSubmit: SubmitHandler<LoginRequest> = async (data) => {
     try {
       const res = await authService.login(data);
+      console.log(res);
+      if (res) {
+        dispatch(getCurrenUser());
+      }
       ToastSucess("Đăng nhập thành công");
       accountService.setAccountValue(res.data);
       onClose();
@@ -46,7 +50,10 @@ const Login: React.FC<LoginProps> = ({ onClose }) => {
           setError("email", { type: "server", message: apiErrors.email[0] });
         }
         if (apiErrors.password) {
-          setError("password", { type: "server", message: apiErrors.password[0] });
+          setError("password", {
+            type: "server",
+            message: apiErrors.password[0],
+          });
         }
       }
       ToastError("Lỗi khi đăng nhập");
@@ -106,7 +113,11 @@ const Login: React.FC<LoginProps> = ({ onClose }) => {
             <a href="#">Quên mật khẩu?</a>
           </div>
 
-          <button className={styles.submit} type="submit" disabled={isSubmitting}>
+          <button
+            className={styles.submit}
+            type="submit"
+            disabled={isSubmitting}
+          >
             Đăng nhập
           </button>
         </form>

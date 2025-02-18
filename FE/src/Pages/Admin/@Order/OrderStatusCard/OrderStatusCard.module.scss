@@ -1,0 +1,54 @@
+.card {
+    flex: 1;
+    padding: 20px;
+    border-radius: 13px;
+    -webkit-border-radius: 13px;
+    -moz-border-radius: 13px;
+    -ms-border-radius: 13px;
+    -o-border-radius: 13px;
+    color: white;
+
+}
+
+.green {
+    background-color: #17a2b8;
+}
+
+.blue {
+    background-color: #007bff;
+}
+
+.stats {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 15px;
+    background-color: #ffff;
+    padding: 15px;
+    border-radius: 13px;
+    -webkit-border-radius: 13px;
+    -moz-border-radius: 13px;
+    -ms-border-radius: 13px;
+    -o-border-radius: 13px;
+    .stat-item {
+        display: flex;
+        align-items: center;
+        .icon {
+            font-size: 40px;
+            margin-right: 10px;
+            color: #15cab8;
+        }
+        .value{
+            color: #222222;
+            font-size: 40px;
+            margin-top: 10px;
+        }
+        p{
+            font-size: 13px;
+            color: gray;
+        }
+    }
+}
+
+
+
+

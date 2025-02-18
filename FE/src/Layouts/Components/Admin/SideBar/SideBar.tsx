@@ -11,6 +11,8 @@ const SideBar: React.FC= () => {
         { icon: 'bxl-product-hunt', text: 'Sản phẩm', url: '/admin/product' },
         { icon: 'bx-hive', text: 'Thuộc tính', url: '/admin/attribute' },
         { icon: 'bx-bold', text: 'Thương hiệu', url: '/admin/brand' },
+        { icon: 'bxs-coupon', text: 'Mã giảm giá', url: '/admin/coupon' },
+        { icon: 'bx-shopping-bag', text: 'Đơn hàng', url: '/admin/order' },
         
     ];
 

@@ -23,7 +23,7 @@ return new class extends Migration
             $table->decimal('max_discount_value', 10, 2)->nullable(); // Mức giảm tối đa cho voucher
 
             // Ngày bắt đầu và ngày hết hạn của voucher
-            $table->timestamp('start_date')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('start_date')->nullable();
             $table->timestamp('end_date')->nullable(); // Cho phép null để tránh lỗi
 
             $table->integer('limit')->default(1);

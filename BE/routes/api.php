@@ -1,11 +1,15 @@
 <?php
 
 use App\Http\Controllers\API\Auth\AuthController;
+use App\Http\Controllers\API\CRUDAPI\AddressController;
 use App\Http\Controllers\API\CRUDAPI\AttributeController;
 use App\Http\Controllers\API\CRUDAPI\BrandController;
 use App\Http\Controllers\API\CRUDAPI\CartController;
 use App\Http\Controllers\API\CRUDAPI\CategoryController;
 use App\Http\Controllers\API\CRUDAPI\ProductController;
+use App\Http\Controllers\API\CRUDAPI\VoucherController;
+use App\Http\Controllers\API\Order\OrderController;
+use App\Http\Controllers\Payment\VNPayController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,13 +24,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user',[AuthController::class,'getUser']);
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refreshToken']);
     Route::post('change-password', [AuthController::class, 'changePassword']);
@@ -63,6 +66,13 @@ Route::prefix('brands')->group(function () {
     Route::post('/edit/{id}', [BrandController::class, 'update'])->middleware('auth:sanctum');
     Route::delete('/{id}', [BrandController::class, 'delete'])->middleware('auth:sanctum');
 });
+//brand
+Route::prefix('coupon')->group(function () {
+    Route::get('/', [VoucherController::class, 'data']);
+    Route::post('/', [VoucherController::class, 'create'])->middleware('auth:sanctum');
+    Route::post('/edit/{id}', [VoucherController::class, 'update'])->middleware('auth:sanctum');
+    Route::delete('/{id}', [VoucherController::class, 'delete'])->middleware('auth:sanctum');
+});
 //CART
 Route::middleware('auth:sanctum')->prefix('cart')->group(function(){
    Route::get('/',[CartController::class,'getCart']);
@@ -72,4 +82,18 @@ Route::middleware('auth:sanctum')->prefix('cart')->group(function(){
    Route::post('/cart-variant',[CartController::class,'updateVariantCart']);
    Route::post('/cart-quantity',[CartController::class,'updateQuantityCart']);
 
+});
+//Address
+Route::middleware('auth:sanctum')->prefix('address')->group(function(){
+    Route::post('/',[AddressController::class,'createAddress']);
+});
+//payment
+Route::middleware('auth:sanctum')->prefix('payment')->group(function(){
+    Route::post('/vnpay', [VNPayController::class, 'createPayment']);
+});
+//order
+Route::middleware('auth:sanctum')->prefix('order')->group(function(){
+    Route::get('/',[OrderController::class,'getOrder']);
+   Route::post('/',[OrderController::class,'placeOrder']);
+   Route::put('/',[OrderController::class,'updateStatus']);
 });
