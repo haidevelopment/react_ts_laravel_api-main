@@ -15,9 +15,10 @@ export const store = configureStore({
     attribute: attributeReducer,
     brand: brandReducer,
     cart: cartReducer,
-    coupon: couponReducer,
+    coupon: couponReducer, 
     user:userReducer,
-    order:orderReducer
+    order:orderReducer,
+
   },
 });
 

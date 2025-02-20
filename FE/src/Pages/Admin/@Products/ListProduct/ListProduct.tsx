@@ -3,7 +3,7 @@ import styles from "./ListProduct.module.scss";
 import { FaEdit, FaSearch, FaTrashAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../../../hooks/useAppSelector";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch } from "../../../../hooks/useAppDispatch";
 import {
   getProducts,
@@ -12,8 +12,10 @@ import {
 import { convertStatus, convertVND } from "../../../../utils/func/convert";
 import { ToastError, ToastSucess } from "../../../../utils/toast";
 import Loading from "../../../../Components/Loading";
+import ProductInventory from "../StockStatus/ProductInventory";
 const cx = classNames.bind(styles);
 const ListProduct = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const dispatch = useAppDispatch();
   const { products } = useAppSelector((state) => state.product);
   useEffect(() => {
@@ -31,7 +33,9 @@ const ListProduct = () => {
         });
     }
   };
-
+  const handleModalInventory = () => {
+    setIsOpen(!isOpen);
+  };
   return (
     <div className={cx("container")}>
       <div className={cx("header")}>
@@ -43,9 +47,14 @@ const ListProduct = () => {
             className={cx("product-search")}
           />
         </div>
-        <Link to="/admin/create-product" className={cx("add-product-button")}>
-          + Thêm Sản Phẩm
-        </Link>
+        <div className={cx("group-btn")}>
+          <Link to="/admin/create-product" className={cx("add-product-button")}>
+            + Thêm Sản Phẩm
+          </Link>
+          <button className={cx("inventory")} onClick={handleModalInventory}>
+            Xem tồn kho
+          </button>
+        </div>
       </div>
       <table className={cx("product-table")}>
         <thead>
@@ -111,6 +120,11 @@ const ListProduct = () => {
           )}
         </tbody>
       </table>
+      {isOpen && (
+        <div className={cx("modal-inventory")}>
+          <ProductInventory onClose={handleModalInventory} />
+        </div>
+      )}
     </div>
   );
 };

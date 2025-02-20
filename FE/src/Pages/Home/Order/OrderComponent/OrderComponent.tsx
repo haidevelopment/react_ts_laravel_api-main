@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { orderTabs } from "../../../../data/tabOrderData";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import nullorder from "../../../../assets/image/logo/nullorder.jpg";
-import { getOrder } from "../../../../Features/Slices/orderSlice";
+import { getOrder, UpdateOrder } from "../../../../Features/Slices/orderSlice";
 import { useAppDispatch } from "../../../../hooks/useAppDispatch";
 import { useAppSelector } from "../../../../hooks/useAppSelector";
 import style from "./OrderComponent.module.scss";
@@ -38,7 +38,9 @@ const OrderComponent = () => {
   const handleTabChange = (key: string) => {
     navigate(`?menu=${activeSidebar}&tab=${key}`);
   };
-
+  const handleTabChangeDetail = (params:string) => {
+    navigate(`?menu=orders&tab=${activeTab}&params=${params}`);
+  };
   const orderCounts = client.reduce((acc, order) => {
     acc["all"] = (acc["all"] || 0) + 1;
     acc[order.order_status] = (acc[order.order_status] || 0) + 1;
@@ -50,8 +52,11 @@ const OrderComponent = () => {
       ? client
       : client.filter((order) => order.order_status === activeTab);
   const handleCanceledOrder = (id: number) => {
-    console.log(id);
-    
+    const data = {
+      id,
+      order_status: "canceled",
+    };
+    dispatch(UpdateOrder(data)).then((e) => console.log(e.payload.code));
   };
 
   return (
@@ -110,12 +115,9 @@ const OrderComponent = () => {
                           Huỷ Đơn Hàng
                         </button>
                       ) : (
-                        <Link
-                          to={`/order/history/${order?.code}`}
-                          className={cx("detail-btn")}
-                        >
+                        <button className={cx("detail-btn")} onClick={()=>handleTabChangeDetail(order?.code)}>
                           Xem chi tiết
-                        </Link>
+                        </button>
                       )}
                     </td>
                   </tr>

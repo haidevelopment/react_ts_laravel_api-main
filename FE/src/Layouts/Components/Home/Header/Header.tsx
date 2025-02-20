@@ -44,29 +44,39 @@ const Header = () => {
     <header className={cx("header-container")}>
       <div className={cx("header-top")}>
         <div className={cx("logo")}>
-          <Link to="/">
-            <img src={logo} alt="tokyo-life-logo" />
-          </Link>
+          <div className="logo-step">
+            <Link to="/">
+              <img src={logo} alt="tokyo-life-logo" />
+            </Link>
+          </div>
         </div>
-        <div className={cx("search")}>
-          <input type="text" placeholder="Tìm kiếm..." />{" "}
-          <button>
-            <FaSearch />
-          </button>
+        <div className="search-step">
+          <div className={cx("search")}>
+            <input type="text" placeholder="Tìm kiếm..." />{" "}
+            <button>
+              <FaSearch />
+            </button>
+          </div>
         </div>
         <div className={cx("navigation")}>
-          <Link to="/cart" className={cx("navigation-link")}>
-            <FaShoppingCart />
-            <div className={cx("gates")}>3</div>
-          </Link>
-          <Link to="/tracking" className={cx("navigation-link")}>
-            <FaTruck />
-          </Link>
-          {!token && !authenticated ? (
-            <BoxForm onOpen={openModal} />
-          ) : (
-            <AuthBox authenticated={handleUnAuthenticated} />
-          )}
+          <div className="cart-step">
+            <Link to="/cart" className={cx("navigation-link")}>
+              <FaShoppingCart />
+              <div className={cx("gates")}>3</div>
+            </Link>
+          </div>
+          <div className="tracking-step">
+            <Link to="/tracking" className={cx("navigation-link")}>
+              <FaTruck />
+            </Link>
+          </div>
+          <div className="auth-step">
+            {!token && !authenticated ? (
+              <BoxForm onOpen={openModal} />
+            ) : (
+              <AuthBox authenticated={handleUnAuthenticated} />
+            )}
+          </div>
         </div>
       </div>
       <div className={cx("header-bottom")}>
@@ -77,7 +87,7 @@ const Header = () => {
             slidesPerView={8}
             autoplay={{
               delay: 2000,
-              disableOnInteraction: false, 
+              disableOnInteraction: false,
             }}
             loop={true}
           >

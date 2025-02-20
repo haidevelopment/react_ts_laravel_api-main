@@ -2,7 +2,6 @@
 
 
 
-/* SIDEBAR */
 #sidebar {
 	position: fixed;
 	top: 0;
@@ -23,19 +22,32 @@
 	width: 60px;
 }
 #sidebar .brand {
-	font-size: 24px;
-	font-weight: 700;
-	height: 56px;
 	display: flex;
-	align-items: center;
-	color: var(--blue);
-	position: sticky;
-	top: 0;
-	left: 0;
-	background: var(--light);
-	z-index: 500;
-	padding-bottom: 20px;
-	box-sizing: content-box;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    color: #C92127;
+    font-size: 18px;
+    transition: all 0.3s ease-in-out;
+	margin-top: 15px;
+	margin-left: 10px;
+	.icon {
+        font-size: 24px;
+        background: #fff;
+        border-radius: 50%;
+        padding: 8px 13px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        color: #C92127;
+    }
+
+    .text {
+        letter-spacing: 1px;
+        font-family: "Poppins", sans-serif;
+    }
+}
+#sidebar .brand:hover {
+	color: #111;
 }
 #sidebar .brand .bx {
 	min-width: 60px;
@@ -92,7 +104,7 @@
 	overflow-x: hidden;
 }
 #sidebar .side-menu.top li.active a {
-	color: var(--blue);
+	color: #C92127;
 }
 #sidebar.hide .side-menu li a {
 	width: calc(48px - (4px * 2));
@@ -102,20 +114,14 @@
 	color: var(--red);
 }
 #sidebar .side-menu.top li a:hover {
-	color: var(--blue);
+	color: #C92127;
 }
 #sidebar .side-menu li a .bx {
 	min-width: calc(60px  - ((4px + 6px) * 2));
 	display: flex;
 	justify-content: center;
 }
-/* SIDEBAR */
 
-
-
-
-
-/* CONTENT */
 #content {
 	position: relative;
 	width: calc(100% - 280px);

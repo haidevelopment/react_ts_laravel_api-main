@@ -25,7 +25,7 @@ export const createOrder = createAsyncThunk(
 );
 export const UpdateOrder = createAsyncThunk(
   "order/update",
-  async (data: {id:number,order_status:string}) => {
+  async (data: { id: number; order_status: string }) => {
     return await updateOrderStatus(data);
   }
 );
@@ -52,21 +52,20 @@ const orderSlice = createSlice({
           state.admin.push(action.payload);
         }
         state.status = "idle";
-      }).addCase(UpdateOrder.fulfilled,(state,action)=>{
-        if (state.client) {
-         const i = state.client.findIndex((c)=> c?.id == action.payload.id);
-         if(i){
-          state.client[i] = action.payload;
-         }
-        }
-        if (state.admin) {
-          const i = state.admin.findIndex((c)=> c?.id == action.payload.id);
-          if(i){
-           state.admin[i] = action.payload;
-          }
-         }
-         ToastSucess(`Chỉnh sửa trạng thái đơn hàng #${action.payload.code} thành công`);
-        state.status = "idle";
       })
+      .addCase(UpdateOrder.fulfilled, (state, action) => {
+        const i = state.client.findIndex((c) => c?.id == action.payload.id);
+
+        state.client[i] = action.payload;
+
+        const j = state.admin.findIndex((c) => c?.id == action.payload.id);
+
+        state.admin[j] = action.payload;
+
+        ToastSucess(
+          `Chỉnh sửa trạng thái đơn hàng #${action.payload.code} thành công`
+        );
+        state.status = "idle";
+      }),
 });
 export default orderSlice.reducer;

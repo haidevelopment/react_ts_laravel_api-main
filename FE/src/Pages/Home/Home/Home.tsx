@@ -26,13 +26,17 @@ const Home = () => {
       <section className={cx("main")}>
         <h2>Tết An Lành</h2>
         <CategoryHome />
-        <div className={cx("coupon-list")}>
-          <h2>THÊM YÊU THÊM DEAL ĐỘC QUYỀN ONLINE</h2>
-          {coupon.map((c) => (
-            <VoucherList coupon={c} key={c?.id} />
-          ))}
+        <div className="coupon-step">
+          <div className={cx("coupon-list")}>
+            <h2>THÊM YÊU THÊM DEAL ĐỘC QUYỀN ONLINE</h2>
+            {coupon.map((c) => (
+              <VoucherList coupon={c} key={c?.id} />
+            ))}
+          </div>
         </div>
-        <ProductList type="nomal" data={products} />
+        <div className="product-step">
+          <ProductList type="nomal" data={products} />
+        </div>
       </section>
     </div>
   );

@@ -11,16 +11,25 @@ import ProductViewIcon from "../../../Components/UserPageSvg/ProductViewIcon";
 import OrderComponent from "./OrderComponent/OrderComponent";
 import Profile from "./Profile/Profile";
 import Review from "./Review/Review";
+import OrderDetail from "./OrderDetail/OrderDetail";
 
 const cx = classNames.bind(styles);
 
 const sidebarTabs = [
-  { key: "orders", label: "Đơn hàng của tôi", icon: <OrderIcon />, component: <OrderComponent /> },
-  { key: "account", label: "Tài khoản của tôi", icon: <UserIcon />, component: <Profile /> },
-  { key: "vouchers", label: "Mã khuyến mại", icon: <CouponIcon />, component: <div>Mã giảm giá</div> },
-  { key: "reviews", label: "Đánh giá của tôi", icon: <ReviewIcon />, component: <Review /> },
-  { key: "history", label: "Sản phẩm đã xem", icon: <ProductViewIcon />, component: <div>Sản phẩm đã xem</div> },
+  { key: "orders", label: "Đơn hàng của tôi", icon: <OrderIcon /> },
+  { key: "account", label: "Tài khoản của tôi", icon: <UserIcon /> },
+  { key: "vouchers", label: "Mã khuyến mại", icon: <CouponIcon /> },
+  { key: "reviews", label: "Đánh giá của tôi", icon: <ReviewIcon /> },
+  { key: "history", label: "Sản phẩm đã xem", icon: <ProductViewIcon /> },
 ];
+
+const componentMapping: Record<string, JSX.Element> = {
+  orders: <OrderComponent />,
+  account: <Profile />,
+  vouchers: <div>Coupon coming soon</div>,
+  reviews: <Review />,
+  history: <div>Sản phẩm đã xem</div>,
+};
 
 const Order = () => {
   const navigate = useNavigate();
@@ -38,7 +47,10 @@ const Order = () => {
     navigate(`?menu=${key}&tab=${activeTab}`);
   };
 
-  const activeComponent = sidebarTabs.find((tab) => tab.key === activeSidebar)?.component || <div>Không tìm thấy</div>;
+  const activeComponent =
+    activeSidebar === "orders" && new URLSearchParams(location.search).get("params")
+      ? <OrderDetail />
+      : componentMapping[activeSidebar] || <div>Không tìm thấy</div>;
 
   return (
     <div className={cx("container")}>
@@ -56,7 +68,9 @@ const Order = () => {
           {sidebarTabs.map((tab) => (
             <button
               key={tab.key}
-              className={cx("sidebar-item", { active: activeSidebar === tab.key })}
+              className={cx("sidebar-item", {
+                active: activeSidebar === tab.key,
+              })}
               onClick={() => handleSidebarChange(tab.key)}
             >
               <span className={cx("icon")}>{tab.icon}</span> {tab.label}
@@ -64,9 +78,7 @@ const Order = () => {
           ))}
         </div>
 
-        <div className={cx("content")}>
-          {activeComponent}
-        </div>
+        <div className={cx("content")}>{activeComponent}</div>
       </div>
     </div>
   );

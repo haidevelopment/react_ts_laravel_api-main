@@ -21,7 +21,7 @@ import ModalSelectAddress from "./ModalSelectAddress/ModalSelectAddress";
 import { VNPayAPI } from "../../../services/Api/paymentAPI";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import LoadingOrder from "../../../Components/LoadingOrder/LoadingOrder";
-import { createOrder } from "../../../Features/Slices/orderSlice";
+import { createOrder, getOrder } from "../../../Features/Slices/orderSlice";
 
 const cx = classNames.bind(styles);
 
@@ -30,6 +30,7 @@ const Checkout: React.FC = () => {
   const { cart } = useAppSelector((state) => state.cart);
   const { coupon } = useAppSelector((state) => state.coupon);
   const { user } = useAppSelector((state) => state.user);
+  const { client } = useAppSelector((state) => state.order);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [couponCode, setCouponCode] = useState("");
@@ -46,6 +47,7 @@ const Checkout: React.FC = () => {
     dispatch(getCart());
     dispatch(getCoupon());
     dispatch(getCurrenUser());
+    dispatch(getOrder());
   }, [dispatch]);
   useEffect(() => {
     if (user?.user?.user && user.user.user.length > 0) {
@@ -76,6 +78,16 @@ const Checkout: React.FC = () => {
       return;
     }
 
+    const hasUsedCoupon = client.some(
+      (order) =>
+        order.coupon_id === coupon.find((c) => c.code === couponCode)?.id
+    );
+
+    if (hasUsedCoupon) {
+      setError("Voucher đã được sử dụng.");
+      return;
+    }
+
     const selectedCoupon = coupon.find((c) => c.code === couponCode);
     if (!selectedCoupon) {
       setError("Mã giảm giá không tồn tại.");
@@ -100,17 +112,18 @@ const Checkout: React.FC = () => {
     }
 
     let discountValue = 0;
-    if (selectedCoupon.discount_type == "percent") {
+    if (selectedCoupon.discount_type === "percent") {
       discountValue = (totalPrice * parseFloat(selectedCoupon.value)) / 100;
-      ToastSucess("Áp dụng mã giám giá thành công !");
+      ToastSucess("Áp dụng mã giảm giá thành công !");
     } else {
       discountValue = parseFloat(selectedCoupon.value);
-      ToastSucess("Áp dụng mã giám giá thành công !");
+      ToastSucess("Áp dụng mã giảm giá thành công !");
     }
 
     discountValue = Math.min(discountValue, selectedCoupon.max_discount_value);
     setDiscount(discountValue);
   };
+
   const handleModal = () => {
     setIsOpenModal(!isOpenModal);
   };

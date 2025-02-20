@@ -4,11 +4,18 @@
     min-height: 960px;
     background-color: #fff;
     margin: 20px;
+    position: relative;
     border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     -ms-border-radius: 5px;
     -o-border-radius: 5px;
+    .modal-inventory{
+        position: absolute;
+        top: 110px;
+        left: 0;
+        width: 100%;
+    }
 
     .header {
         display: flex;
@@ -40,15 +47,38 @@
             }
         }
 
-        .add-product-button {
-            background-color: #007bff;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
+        .group-btn{
+            .add-product-button {
+                background-color: #C92127;
+                color: white;
+                padding: 10px 20px;
+                border-radius: 4px;
+                font-size: 16px;
+                cursor: pointer;
+                border: 1px solid #C92127;
+
+            }
+            .inventory{
+                background-color: #ffff;
+                border: 1px solid #C92127;
+                color: #C92127;
+                padding: 10px 20px;
+                border-radius: 4px;
+                font-size: 16px;
+                margin-left: 5px;
+                cursor: pointer;
+                transition:.4s ease-in-out ;
+                -webkit-transition:.4s ease-in-out ;
+                -moz-transition:.4s ease-in-out ;
+                -ms-transition:.4s ease-in-out ;
+                -o-transition:.4s ease-in-out ;
+                &:hover{
+                    background-color: #C92127;
+                    border: 1px solid #C92127;
+                    color: #ffff;
+                }
         }
+}
     }
 
     .product-table {

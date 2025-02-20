@@ -6,6 +6,7 @@ export const routes = {
   checkout:"/checkout",
   order:"/order",
   thank:"/thankyou",
+  product:"/product",
 };
 export const routesAdmin = {
   admin: "/admin",
@@ -17,7 +18,7 @@ export const routesAdmin = {
   product: "/admin/product",
   productCreate: "/admin/create-product",
   productEdit: "/admin/edit-product/:id",
-
+ inventory:"/admin/inventory",
   //attribute
   attribute:'/admin/attribute',
   createAttribute:'/admin/attribute/create',
@@ -33,4 +34,6 @@ export const routesAdmin = {
   // order
   order:"/admin/order",
   orderDetail:"/admin/order/detail/:id",
+  //messages
+  messenger:"/admin/messenger"
 };

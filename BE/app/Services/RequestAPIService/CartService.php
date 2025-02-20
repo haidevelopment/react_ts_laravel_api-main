@@ -110,20 +110,28 @@ class CartService
     {
         $cartItem = Cart::findOrFail(intval($request->id));
         $newVariant = Variant::findOrFail(intval($request->variant_id));
+
         if ($newVariant->quantity < $cartItem->quantity) {
             return [
                 'status' => 'error',
                 'message' => 'Số lượng phân loại không đủ để thay đổi.',
             ];
         }
+
         $cartItem->variant_id = $request->variant_id;
+        $cartItem->price = $newVariant->price;
+
+        $cartItem->total = $cartItem->quantity * $newVariant->price;
+
         $cartItem->save();
+
         return [
             'status' => 'success',
             'message' => 'Cập nhật phân loại thành công.',
             'data' => $this->getDataLate($cartItem->id),
         ];
     }
+
     public function updateQuantityCart($request)
     {
 

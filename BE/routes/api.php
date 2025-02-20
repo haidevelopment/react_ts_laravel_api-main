@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\Auth\AuthController;
+use App\Http\Controllers\API\ChatAPI\ChatController;
 use App\Http\Controllers\API\CRUDAPI\AddressController;
 use App\Http\Controllers\API\CRUDAPI\AttributeController;
 use App\Http\Controllers\API\CRUDAPI\BrandController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\API\CRUDAPI\CategoryController;
 use App\Http\Controllers\API\CRUDAPI\ProductController;
 use App\Http\Controllers\API\CRUDAPI\VoucherController;
 use App\Http\Controllers\API\Order\OrderController;
+use App\Http\Controllers\API\Statistics\StatisticsController;
 use App\Http\Controllers\Payment\VNPayController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -96,4 +98,24 @@ Route::middleware('auth:sanctum')->prefix('order')->group(function(){
     Route::get('/',[OrderController::class,'getOrder']);
    Route::post('/',[OrderController::class,'placeOrder']);
    Route::put('/',[OrderController::class,'updateStatus']);
+});
+//chat
+
+Route::middleware('auth:sanctum')->prefix('chat')->group(function(){
+    Route::post('/room', [ChatController::class, 'getOrCreateRoom']);
+    Route::post('/send', [ChatController::class, 'sendMessages']);
+    Route::get('/messages/{room_id}', [ChatController::class, 'getMessagesInRoom']);
+    Route::get('/rooms', [ChatController::class, 'getChatAdminPages']);
+});
+//revewnurs
+Route::middleware('auth:sanctum')->prefix('statistics')->group(function () {
+    Route::get('/revenue', [StatisticsController::class, 'revenueStatistics']);
+    Route::get('/orders', [StatisticsController::class, 'orderStatistics']);
+    Route::get('/aov', [StatisticsController::class, 'averageOrderValue']);
+    Route::get('/conversion-rate', [StatisticsController::class, 'conversionRate']);
+    Route::get('/best-selling-products', [StatisticsController::class, 'bestSellingProducts']);
+    Route::get('/stock-status', [StatisticsController::class, 'stockStatus']);
+    Route::get('/return-rate', [StatisticsController::class, 'returnRate']);
+    Route::get('/order-status', [StatisticsController::class, 'getOrderStatus']);
+
 });

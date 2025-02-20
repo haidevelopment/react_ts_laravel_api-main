@@ -14,7 +14,9 @@
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@hookform/resolvers": "^3.9.1",
+    "@reactour/tour": "^3.7.0",
     "@reduxjs/toolkit": "^2.5.0",
+    "antd": "^5.24.1",
     "axios": "^1.7.9",
     "boxicons": "^2.1.4",
     "classnames": "^2.5.1",
@@ -31,6 +33,7 @@
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.1.1",
     "react-select": "^5.10.0",
+    "recharts": "^2.15.1",
     "swiper": "^11.1.15",
     "xlsx": "^0.18.5",
     "zod": "^3.24.1"

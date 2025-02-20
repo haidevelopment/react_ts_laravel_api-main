@@ -84,7 +84,7 @@ body {
 	transition: .3s ease;
 }
 #content nav .nav-link:hover {
-	color: var(--blue);
+	color: #C92127;
 }
 #content nav form {
 	max-width: 400px;
@@ -113,7 +113,7 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background: var(--blue);
+	background: #C92127;
 	color: var(--light);
 	font-size: 18px;
 	border: none;
@@ -133,7 +133,7 @@ body {
 	height: 20px;
 	border-radius: 50%;
 	border: 2px solid var(--light);
-	background: var(--red);
+	background: #C92127;
 	color: var(--light);
 	font-weight: 700;
 	font-size: 12px;
@@ -163,14 +163,13 @@ body {
 	left: 2px;
 	bottom: 2px;
 	width: calc(25px - 4px);
-	background: var(--blue);
+	background: #C92127;
 	border-radius: 50%;
 	transition: all .3s ease;
 }
 #content nav #switch-mode:checked + .switch-mode::before {
 	left: calc(100% - (25px - 4px) - 2px);
 }
-/* NAVBAR */
 
 @media screen and (max-width: 768px) {
 	#sidebar {

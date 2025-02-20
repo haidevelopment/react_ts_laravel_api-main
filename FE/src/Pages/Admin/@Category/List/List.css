@@ -43,7 +43,7 @@
 }
 
 .add-category-button {
-  background-color: #007bff;
+  background-color: #C92127;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -53,7 +53,7 @@
 }
 
 .add-category-button:hover {
-  background-color: #005bff;
+  background-color: #d74247;
 }
 
 .category-table {

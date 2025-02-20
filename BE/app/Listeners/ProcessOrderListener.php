@@ -9,6 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Product;
 use App\Models\Variant;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -63,7 +64,10 @@ class ProcessOrderListener implements ShouldQueue
                 $variant = Variant::find($item->variant_id);
 
                 $variant->decrement('quantity', $item->quantity);
-
+                $product = Product::find($variant->product_id);
+                if ($product) {
+                    $product->decrement('quantity', $item->quantity);
+                }
                 OrderItem::create([
                     'order_id' => $order->id,
                     'product_id' => $item->id_product,

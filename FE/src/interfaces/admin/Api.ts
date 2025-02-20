@@ -166,3 +166,32 @@ export interface orderItem {
   };
   variant: variantProduct;
 }
+export interface Message {
+  id: number;
+  chat_id: number;
+  sender_id: number;
+  type: "text" | "image" | "video" | "file";
+  messages: string;
+  created_at: string;
+  updated_at: string;
+  user?: Admin;
+}
+interface Admin {
+  id: number;
+  first_name: string;
+  last_name: string;
+  email: string;
+  genre: "male" | "female" | "other";
+  birth: string;
+  email_verified_at: string | null;
+  max_level_security: number;
+  created_at: string;
+  updated_at: string;
+}
+export interface roomAdminApi{
+  id:number;
+  customer_id:number;
+  admin_id:number;
+  user:Admin
+
+}

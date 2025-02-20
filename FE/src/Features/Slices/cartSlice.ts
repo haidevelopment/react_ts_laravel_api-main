@@ -100,14 +100,14 @@ const cartSlice = createSlice({
       })
       .addCase(editVariantCart.fulfilled, (state, action) => {
         if (state.cart) {
-          if (action.payload.status == "error") {
+          if (action.payload.status === "error") {
             ToastError(action.payload.message);
             state.status = "failed";
           } else {
             const index = state.cart.findIndex(
               (c) => c?.id == action.payload.data.id
             );
-            if (index) {
+            if (index !== -1) {
               state.cart[index] = action.payload.data;
             }
             state.status = "idle";
@@ -115,6 +115,7 @@ const cartSlice = createSlice({
           }
         }
       })
+
       .addCase(editQuantityCart.fulfilled, (state, action) => {
         if (state.cart) {
           if (action.payload.status == "error") {

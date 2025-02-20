@@ -48,6 +48,7 @@ class OrderController extends Controller
         $obj = Order::find($request->id);
         $obj->order_status = $request->order_status;
         $obj->save();
-        return response()->json($obj);
+        $data = Order::with('items.product', 'items.variant.variantAttributeValue.attributeValue', 'items.variant.variantAttributeValue.attribute', 'address', 'coupon')->where('id',$obj->id)->first();
+        return response()->json($data);
     }
 }

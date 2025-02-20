@@ -73,14 +73,32 @@
 
 td {
   a {
-    padding: 10px 30px;
-    background-color: #44a6e9;
-    color: #ffff;
-    border-radius: 4px;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    -ms-border-radius: 4px;
-    -o-border-radius: 4px;
+    background: none;
+    border: 1px solid lightgray;
+    color: gray;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: #c92127;
+      color: white;
+    }
+  }
+  .btn-confirm {
+    background: none;
+    border: 1px solid #c92127;
+    color: #c92127;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: #c92127;
+      color: white;
+    }
   }
 }
 .status {
