@@ -12,13 +12,14 @@ Tokyo Life là một website bán hàng trực tuyến được xây dựng bằ
 - Hỗ trợ giỏ hàng và quản lý sản phẩm.
 - Hệ thống đăng ký/đăng nhập người dùng.
 - Hiển thị chi tiết sản phẩm với hình ảnh và mô tả.
-- Thanh toán trực tuyến (VNPay, MoMo, PayPal, COD).
+- Thanh toán trực tuyến (VNPay, COD).
 
 ### Backend:
 - API RESTful xây dựng bằng Laravel, hỗ trợ đầy đủ các CRUD chức năng:
   - Quản lý sản phẩm, danh mục, và kho hàng.
   - Xử lý giỏ hàng và thanh toán.
-  - Xác thực người dùng (JWT Authentication).
+  - Xác thực người dùng ( Authentication Sanctum).
+  - Quản lí đơn hàng , tài khoản
 - Tích hợp gửi email thông báo đơn hàng.
 - Tối ưu hiệu suất và bảo mật.
 
@@ -32,12 +33,12 @@ Tokyo Life là một website bán hàng trực tuyến được xây dựng bằ
 - **Axios**: Kết nối API.
 - **Redux Toolkit**: Quản lý trạng thái ứng dụng.
 - **React Hook Form**: Quản lý biểu mẫu.
-- **TailwindCSS**: Tùy chỉnh giao diện.
+- **SCSS**: Tùy chỉnh giao diện.
 
 ### Backend:
 - **Laravel**: Framework backend mạnh mẽ.
 - **MySQL**: Hệ quản trị cơ sở dữ liệu.
-- **Passport hoặc Sanctum**: Xác thực API.
+- ** Sanctum**: Xác thực API.
 - **Pusher**: Thông báo thời gian thực.
 
 ---
@@ -78,7 +79,7 @@ REACT_APP_API_URL=http://localhost:8000/api
 
 npm run dev
 
-Dưới đây là nội dung chi tiết cho tệp README.md phù hợp với dự án website bán hàng Tokyo Life sử dụng React (TypeScript) và Laravel API:
+
 
 markdown
 Sao chép mã
@@ -96,13 +97,14 @@ Tokyo Life là một website bán hàng trực tuyến được xây dựng bằ
 - Hỗ trợ giỏ hàng và quản lý sản phẩm.
 - Hệ thống đăng ký/đăng nhập người dùng.
 - Hiển thị chi tiết sản phẩm với hình ảnh và mô tả.
-- Thanh toán trực tuyến (VNPay, MoMo, PayPal, COD).
+- Thanh toán trực tuyến (VNPay, COD).
 
 ### Backend:
 - API RESTful xây dựng bằng Laravel, hỗ trợ đầy đủ các CRUD chức năng:
   - Quản lý sản phẩm, danh mục, và kho hàng.
   - Xử lý giỏ hàng và thanh toán.
-  - Xác thực người dùng (JWT Authentication).
+  - Xác thực người dùng (Auth Sanctum).
+  - Quản lí tài khoản và giỏ hàng
 - Tích hợp gửi email thông báo đơn hàng.
 - Tối ưu hiệu suất và bảo mật.
 
@@ -225,14 +227,9 @@ backend/
 ├── storage/         # File cache, log
 ├── tests/           # Test PHPUnit
 └── .env             # File cấu hình môi trường
-🙏 Acknowledgments
-React và Laravel vì công cụ tuyệt vời.
-Cộng đồng mã nguồn mở vì tài nguyên hữu ích.
-Đội ngũ phát triển Tokyo Life đã làm việc chăm chỉ.
+
 📧 Contact
-Email: support@tokyolife.com
-Website: tokyolife.com
-Facebook: Tokyo Life Official
-Chúc bạn thành công với dự án Tokyo Life! 🎉
+Email: haidevelopment24@gmail.com
+
 
 
